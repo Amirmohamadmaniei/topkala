@@ -47,3 +47,28 @@ class UserRegisterForm(forms.Form):
         if password and password2 and password != password2:
             raise ValidationError('رمز عبور یکسان نیست')
         return password
+
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'input-field', 'placeholder': 'رمز عبور قبلی خود را وارد نمایید'}))
+
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'input-field', 'placeholder': 'رمز عبور جدید خود را وارد نمایید'}))
+
+    password2 = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'input-field', 'placeholder': 'رمز عبور جدید خود را مجددا وارد نمایید'}))
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if not 128 > len(password) >= 8:
+            raise ValidationError('رمز عبور باشد بیشتر از ۸ رقم باشد')
+        return password
+
+    def clean_password2(self):
+        password = self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password2')
+
+        if password and password2 and password != password2:
+            raise ValidationError('رمز عبور یکسان نیست')
+        return password

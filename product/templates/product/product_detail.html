@@ -186,10 +186,11 @@
                                     <!--                                    <a href="#" class="btn-link-border">ناسا</a>-->
                                 </p>
                             </div>
-                            <del class="text-muted"> {{ object.price }}</del>
+                            <del class="text-muted"> {{ object.price }} تومان
+
                             <div class="price-product defualt">
                                 <div class="price-value">
-                                    <span> {{ object.price }} </span>
+                                    <span> {{ object.get_price_with_discount }} </span>
                                     <span class="price-currency">تومان</span>
                                 </div>
                                 {% if object.is_discount %}

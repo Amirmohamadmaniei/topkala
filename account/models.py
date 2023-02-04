@@ -33,3 +33,13 @@ class User(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+    @property
+    def get_full_name(self):
+        if self.f_name and self.l_name:
+            return f'{self.f_name} {self.l_name}'
+        if self.f_name:
+            return self.f_name
+        if self.l_name:
+            return self.l_name
+        return 'نامشخص'

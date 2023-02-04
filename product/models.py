@@ -27,6 +27,10 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def get_price_with_discount(self):
+        return self.price - ((self.discount * self.price) // 100)
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, allow_unicode=True)
         super().save(args, **kwargs)
@@ -34,6 +38,7 @@ class Product(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=20)
+    image = models.ImageField(upload_to='category/', null=True)
 
     def __str__(self):
         return self.title
