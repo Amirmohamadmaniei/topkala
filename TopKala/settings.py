@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # my apps
     'home.apps.HomeConfig',
     'account.apps.AccountConfig',
+    'product.apps.ProductConfig',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'product.context_processors.category',
             ],
         },
     },

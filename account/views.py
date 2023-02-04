@@ -3,9 +3,10 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .forms import UserLoginForm, UserRegisterForm
 from .models import User
+from .mixins import NotLoginRequiredMixin
 
 
-class LoginView(View):
+class LoginView(NotLoginRequiredMixin, View):
     form_class = UserLoginForm
     template_name = 'account/login.html'
 
@@ -23,7 +24,7 @@ class LoginView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class RegisterView(View):
+class RegisterView(NotLoginRequiredMixin, View):
     form_class = UserRegisterForm
     template_name = 'account/register.html'
 
@@ -40,6 +41,6 @@ class RegisterView(View):
         return render(request, self.template_name, {'form': form})
 
 
-class WelcomeView(View):
+class WelcomeView(NotLoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'account/welcome.html')

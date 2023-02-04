@@ -1,0 +1,525 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- main -->
+<main class="single-product default">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#"><span>فروشگاه اینترنتی تاپ کالا</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><span>{{ object.category }}</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><span>{{ object.sub_category }}</span></a>
+                        </li>
+                        <li>
+                            <a href="#"><span>{{ object.subset }}</span></a>
+                        </li>
+                        <li>
+                            <span>{{ object.title }}</span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <article class="product">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="product-gallery default">
+
+                                <img class="zoom-img" id="img-product-zoom" src="{{ object.images.first.image.url }}"
+                                     data-zoom-image="{{ object.images.first.image.url }}" width="411"/>
+
+                                <div id="gallery_01f" style="width:500px;float:left;">
+                                    <ul class="gallery-items">
+                                        {% for img in object.images.all %}
+                                        <li>
+                                            <a href="#" class="elevatezoom-gallery active" data-update=""
+                                               data-image="{{ img.image.url }}"
+                                               data-zoom-image="{{ img.image.url }}">
+                                                <img src="{{ img.image.url }}" width="100"/></a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <ul class="gallery-options">
+                                <li>
+                                    <button class="add-favorites"><i class="fa fa-heart"></i></button>
+                                    <span class="tooltip-option">افزودن به علاقمندی</span>
+                                </li>
+                                <li>
+                                    <button data-toggle="modal" data-target="#myModal"><i class="fa fa-share-alt"></i>
+                                    </button>
+                                    <span class="tooltip-option">اشتراک گذاری</span>
+                                </li>
+                            </ul>
+                            <!-- Modal Core -->
+                            <div class="modal-share modal fade" id="myModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                &times;
+                                            </button>
+                                            <h4 class="modal-title" id="myModalLabel">اشتراک گذاری</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form-share">
+                                                <div class="form-share-title">اشتراک گذاری در شبکه های اجتماعی</div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <ul class="btn-group-share">
+                                                            <li><a href="#" class="btn-share btn-share-twitter"
+                                                                   target="_blank"><i class="fa fa-twitter"></i></a>
+                                                            </li>
+                                                            <li><a href="#" class="btn-share btn-share-facebook"
+                                                                   target="_blank"><i class="fa fa-facebook"></i></a>
+                                                            </li>
+                                                            <li><a href="#" class="btn-share btn-share-google-plus"
+                                                                   target="_blank"><i class="fa fa-google-plus"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="form-share-title">ارسال به ایمیل</div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label class="ui-input ui-input-send-to-email">
+                                                            <input class="ui-input-field" type="email"
+                                                                   placeholder="آدرس ایمیل را وارد نمایید.">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <button class="btn-primary">ارسال</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form class="form-share-url default">
+                                                <div class="form-share-url-title">آدرس صفحه</div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label class="ui-url">
+                                                            <input class="ui-url-field"
+                                                                   value="https://www.digikala.com">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal Core -->
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="product-title default">
+                                <h1>
+                                    {{ object.title }}
+                                    <span>{{ object.title_en }}</span></h1>
+                            </div>
+                            <div class="product-directory default">
+                                <ul>
+                                    <li>
+                                        <span>برند</span> :
+                                        <span class="product-brand-title">{{ object.brand }}</span>
+                                    </li>
+                                    <li>
+                                        <span>دسته‌بندی</span> :
+                                        <a href="#" class="btn-link-border">
+                                            {{ object.sub_category }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="product-variants default">
+                                <span>انتخاب رنگ: </span>
+
+
+                                {% for color in object.color.all %}
+                                <div class="radio">
+                                    <input type="radio" name="radio1"
+                                           id="radio{{ forloop.counter }}" value="{{ color.title_en }}" checked>
+                                    <label for="radio{{ forloop.counter }}">
+                                        {{ color.title }}
+                                    </label>
+                                </div>
+                                {% endfor %}
+
+
+                                <!--                                <div class="radio">-->
+                                <!--                                    <input type="radio" name="radio1" id="radio1" value="option1">-->
+                                <!--                                    <label for="radio1">-->
+                                <!--                                        خاکستری-->
+                                <!--                                    </label>-->
+                                <!--                                </div>-->
+
+                                <!--                                <div class="radio">-->
+                                <!--                                    <input type="radio" name="radio1" id="radio2" value="option2" ="">-->
+                                <!--                                    <label for="radio2">-->
+                                <!--                                        نقره ای-->
+                                <!--                                    </label>-->
+                                <!--                                </div>-->
+
+                            </div>
+                            <div class="product-guarantee default">
+                                <i class="fa fa-check-circle"></i>
+                                <p class="product-guarantee-text">گارانتی اصالت و سلامت فیزیکی کالا</p>
+                            </div>
+                            <div class="product-delivery-seller default">
+                                <p>
+                                    <!--                                    <i class="now-ui-icons shopping_shop"></i>-->
+                                    <!--                                    <span>فروشنده:‌</span>-->
+                                    <!--                                    <a href="#" class="btn-link-border">ناسا</a>-->
+                                </p>
+                            </div>
+                            <del class="text-muted"> {{ object.price }}</del>
+                            <div class="price-product defualt">
+                                <div class="price-value">
+                                    <span> {{ object.price }} </span>
+                                    <span class="price-currency">تومان</span>
+                                </div>
+                                {% if object.is_discount %}
+                                <div class="price-discount" data-title="تخفیف">
+                                    <span>{{ object.discount }}</span>
+                                    <span>%</span>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="product-add default">
+                                <div class="parent-btn">
+                                    <a href="#" class="dk-btn dk-btn-info">
+                                        افزودن به سبد خرید
+                                        <i class="now-ui-icons shopping_cart-simple"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12 center-breakpoint">
+                            <div class="product-guaranteed default">
+                                بیش از ۱۸۰ نفر از خریداران این محصول را پیشنهاد داده‌اند
+                            </div>
+                            <div class="product-params default">
+                                <ul data-title="ویژگی‌های محصول">
+                                    {% for property in object.properties.all %}
+                                    <li>
+                                        <span> {{ property.key }} : </span>
+                                        <span> {{ property.value }} </span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div class="col-12 default no-padding">
+                    <div class="product-tabs default">
+                        <div class="box-tabs default">
+                            <ul class="nav" role="tablist">
+                                <li class="box-tabs-tab">
+                                    <a class="active" data-toggle="tab" href="#desc" role="tab" aria-expanded="true">
+                                        <i class="now-ui-icons objects_umbrella-13"></i> نقد و بررسی
+                                    </a>
+                                </li>
+                                <li class="box-tabs-tab">
+                                    <a data-toggle="tab" href="#params" role="tab" aria-expanded="false">
+                                        <i class="now-ui-icons shopping_cart-simple"></i> مشخصات
+                                    </a>
+                                </li>
+                                <li class="box-tabs-tab">
+                                    <a data-toggle="tab" href="#comments" role="tab" aria-expanded="false">
+                                        <i class="now-ui-icons shopping_shop"></i> نظرات کاربران
+                                    </a>
+                                </li>
+                                <li class="box-tabs-tab">
+                                    <a data-toggle="tab" href="#questions" role="tab" aria-expanded="false">
+                                        <i class="now-ui-icons ui-2_settings-90"></i> پرسش و پاسخ
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="card-body default">
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="desc" role="tabpanel" aria-expanded="true">
+                                        <article>
+                                            <h2 class="param-title">
+                                                نقد و بررسی تخصصی
+                                                <span>{{ object.title }}</span>
+                                            </h2>
+                                            <div class="parent-expert default">
+                                                <div class="content-expert">
+                                                    <p>{{ object.description }}</p>
+                                                </div>
+                                                <div class="sum-more">
+                                                            <span class="show-more btn-link-border">
+                                                                نمایش بیشتر
+                                                            </span>
+                                                    <span class="show-less btn-link-border">
+                                                                بستن
+                                                            </span>
+                                                </div>
+                                                <div class="shadow-box"></div>
+                                            </div>
+
+                                            {% for des in object.sub_descriptions.all %}
+
+                                            <div class="accordion default" id="accordionExample">
+                                                <div class="card">
+                                                    <div class="card-header" id="heading{{ forloop.counter }}">
+                                                        <h5 class="mb-0">
+                                                            <button class="btn btn-link" type="button"
+                                                                    data-toggle="collapse"
+                                                                    data-target="#collapse{{ forloop.counter }}"
+                                                                    aria-expanded="true"
+                                                                    aria-controls="collapse{{ forloop.counter }}">
+                                                                {{ des.title }}
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+
+
+                                                    <div id="collapse{{ forloop.counter }}" class="collapse"
+                                                         aria-labelledby="heading{{ forloop.counter }}"
+                                                         data-parent="#accordionExample">
+                                                        <div class="card-body">
+                                                            <p> {{ object.description }} </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+
+                                        </article>
+                                    </div>
+                                    <div class="tab-pane params" id="params" role="tabpanel" aria-expanded="false">
+                                        <article>
+                                            <h2 class="param-title">
+                                                مشخصات
+                                                <span>{{ object.title }}</span>
+                                            </h2>
+
+                                            <section>
+                                                <h3 class="params-title">مشخصات کلی</h3>
+                                                <ul class="params-list">
+                                                    {% for property in object.properties.all %}
+                                                    <li>
+                                                        <div class="params-list-key">
+                                                            <span class="block">{{ property.key }}</span>
+                                                        </div>
+                                                        <div class="params-list-value">
+                                                            <span class="block">{{ property.value }}</span>
+                                                        </div>
+                                                    </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </section>
+
+                                        </article>
+                                    </div>
+                                    <div class="tab-pane" id="comments" role="tabpanel" aria-expanded="false">
+                                        <article>
+                                            <h2 class="param-title">
+                                                نظرات کاربران
+                                                <span>۱۲۳ نظر</span>
+                                            </h2>
+                                            <div class="comments-area default">
+                                                <ol class="comment-list">
+                                                    <!-- #comment-## -->
+                                                    <li>
+                                                        <div class="comment-body">
+                                                            <div class="comment-author">
+                                                                <img alt="" src="{% static 'img/default-avatar.png' %}"
+                                                                     class="avatar"><cite class="fn">حسن</cite>
+                                                                <span class="says">گفت:</span></div>
+
+                                                            <div class="commentmetadata"><a href="#">
+                                                                اسفند ۲۰, ۱۳۹۶ در ۹:۴۱ ب.ظ</a></div>
+
+                                                            <p>لورم ایپسوم متن ساختگی</p>
+
+                                                            <div class="reply"><a class="comment-reply-link" href="#">پاسخ</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <!-- #comment-## -->
+                                                    <li>
+                                                        <div class="comment-body">
+                                                            <div class="comment-author">
+                                                                <img alt="" src="{% static 'img/default-avatar.png' %}"
+                                                                     class="avatar"><cite class="fn">رضا</cite>
+                                                                <span class="says">گفت:</span></div>
+
+                                                            <div class="commentmetadata"><a href="#">
+                                                                اسفند ۲۰, ۱۳۹۶ در ۹:۴۲ ب.ظ</a></div>
+
+                                                            <p>
+                                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
+                                                                صنعت چاپ و با استفاده از طراحان گرافیک است.
+                                                            </p>
+
+                                                            <div class="reply"><a class="comment-reply-link" href="#">پاسخ</a>
+                                                            </div>
+                                                        </div>
+                                                        <ol class="children">
+                                                            <li>
+                                                                <div class="comment-body">
+                                                                    <div class="comment-author">
+                                                                        <img alt=""
+                                                                             src="{% static 'img/default-avatar.png' %}"
+                                                                             class="avatar"><cite class="fn">بهرامی
+                                                                        راد</cite> <span class="says">گفت:</span></div>
+
+                                                                    <div class="commentmetadata"><a href="#">
+                                                                        اسفند ۲۰, ۱۳۹۶ در ۹:۴۷ ب.ظ</a>
+                                                                    </div>
+
+                                                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی
+                                                                        نامفهوم از صنعت چاپ و با استفاده از
+                                                                        طراحان گرافیک است.
+                                                                        چاپگرها و متون بلکه روزنامه و مجله در
+                                                                        ستون و سطرآنچنان که لازم است و برای
+                                                                        شرایط فعلی تکنولوژی
+                                                                        مورد نیاز و کاربردهای متنوع با هدف بهبود
+                                                                        ابزارهای کاربردی می باشد.</p>
+
+                                                                    <div class="reply"><a class="comment-reply-link"
+                                                                                          href="#">پاسخ</a></div>
+                                                                </div>
+                                                                <ol class="children">
+                                                                    <li>
+                                                                        <div class="comment-body">
+                                                                            <div class="comment-author">
+                                                                                <img alt=""
+                                                                                     src="{% static 'img/default-avatar.png' %}"
+                                                                                     class="avatar"> <cite class="fn">محمد</cite>
+                                                                                <span class="says">گفت:</span>
+                                                                            </div>
+
+                                                                            <div class="commentmetadata">
+                                                                                <a href="#">
+                                                                                    خرداد ۳۰, ۱۳۹۷ در ۸:۵۳
+                                                                                    ق.ظ</a></div>
+
+                                                                            <p>عالیه</p>
+
+                                                                            <div class="reply"><a
+                                                                                    class="comment-reply-link" href="#">پاسخ</a>
+                                                                            </div>
+                                                                        </div>
+                                                                        <ol class="children">
+                                                                            <li>
+                                                                                <div class="comment-body">
+                                                                                    <div class="comment-author">
+                                                                                        <img alt=""
+                                                                                             src="{% static 'img/default-avatar.png' %}"
+                                                                                             class="avatar">
+                                                                                        <cite class="fn">اشکان</cite>
+                                                                                        <span class="says">گفت:</span>
+                                                                                    </div>
+
+                                                                                    <div class="commentmetadata">
+                                                                                        <a href="#">
+                                                                                            خرداد ۳۰, ۱۳۹۷ در
+                                                                                            ۸:۵۳ ق.ظ</a></div>
+
+                                                                                    <p>لورم ایپسوم متن ساختگی با
+                                                                                        تولید سادگی نامفهوم از
+                                                                                        صنعت چاپ و با استفاده از
+                                                                                        طراحان
+                                                                                        گرافیک است. چاپگرها و
+                                                                                        متون بلکه روزنامه و مجله
+                                                                                        در ستون و سطرآنچنان که
+                                                                                        لازم است و
+                                                                                        برای شرایط فعلی تکنولوژی
+                                                                                        مورد نیاز و کاربردهای
+                                                                                        متنوع با هدف بهبود
+                                                                                        ابزارهای
+                                                                                        کاربردی می باشد.</p>
+
+                                                                                    <div class="reply"><a
+                                                                                            class="comment-reply-link"
+                                                                                            href="#">پاسخ</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <!-- #comment-## -->
+                                                                        </ol>
+                                                                        <!-- .children -->
+                                                                    </li>
+                                                                    <!-- #comment-## -->
+                                                                </ol>
+                                                                <!-- .children -->
+                                                            </li>
+                                                            <!-- #comment-## -->
+                                                        </ol>
+                                                        <!-- .children -->
+                                                    </li>
+                                                    <!-- #comment-## -->
+                                                    <li>
+                                                        <div class="comment-body">
+                                                            <div class="comment-author">
+                                                                <img alt="" src="{% static 'img/default-avatar.png' %}"
+                                                                     class="avatar"> <cite class="fn">جلال</cite>
+                                                                <span class="says">گفت:</span></div>
+
+                                                            <div class="commentmetadata"><a href="#">
+                                                                اسفند ۲۱, ۱۳۹۶ در ۱:۱۰ ب.ظ</a></div>
+
+                                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
+                                                                صنعت چاپ و با استفاده از طراحان گرافیک است.
+                                                                چاپگرها و
+                                                                متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
+                                                                لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
+                                                                کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
+                                                                باشد.</p>
+
+                                                            <div class="reply"><a class="comment-reply-link" href="">پاسخ</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <!-- #comment-## -->
+                                                </ol>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="tab-pane form-comment" id="questions" role="tabpanel"
+                                         aria-expanded="false">
+                                        <article>
+                                            <h2 class="param-title">
+                                                افزودن نظر
+                                                <span>نظر خود را در مورد محصول مطرح نمایید</span>
+                                            </h2>
+                                            <form action="" class="comment">
+                                                <textarea class="form-control" placeholder="نظر" rows="5"></textarea>
+                                                <button class="btn btn-default">ارسال نظر</button>
+                                            </form>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- main -->
+{% endblock %}

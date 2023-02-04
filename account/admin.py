@@ -24,7 +24,6 @@ class UserAdmin(BaseUserAdmin):
         ('permission', {'fields': ('is_admin', 'is_active')}),
     )
 
-
     search_fields = ('phone',)
     ordering = ('is_admin', 'created')
     filter_horizontal = ()
