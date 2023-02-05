@@ -54,10 +54,21 @@
                                 </div>
                             </div>
                             <ul class="gallery-options">
+                                {% if is_favorite %}
                                 <li>
-                                    <button class="add-favorites"><i class="fa fa-heart"></i></button>
-                                    <span class="tooltip-option">افزودن به علاقمندی</span>
+                                    <a href="{% url 'profile:add_favorite' object.id %}">
+                                        <button class="add-favorites"><i class="fa fa-heart"></i></button>
+                                        <span class="tooltip-option">افزودن به علاقمندی</span>
+                                    </a>
                                 </li>
+                                {% else %}
+                                <li>
+                                    <a href="{% url 'profile:add_favorite' object.id %}">
+                                        <button class="add-favorites"><i class="fa fa-heart-o"></i></button>
+                                        <span class="tooltip-option">افزودن به علاقمندی</span>
+                                    </a>
+                                </li>
+                                {% endif %}
                                 <li>
                                     <button data-toggle="modal" data-target="#myModal"><i class="fa fa-share-alt"></i>
                                     </button>
@@ -173,20 +184,29 @@
                                     <p>
                                     </p>
                                 </div>
-                                <del class="text-muted"> {{ object.price }} تومان</del>
 
-                                <div class="price-product defualt">
-                                    <div class="price-value">
-                                        <span> {{ object.get_price_with_discount }} </span>
-                                        <span class="price-currency">تومان</span>
+
+                                {% if object.discount %}
+                                    <del class="text-muted"> {{ object.price }} تومان</del>
+                                    <div class="price-product defualt">
+                                        <div class="price-value">
+                                            <span> {{ object.get_price_with_discount }} </span>
+                                            <span class="price-currency">تومان</span>
+                                        </div>
+
+                                        <div class="price-discount" data-title="تخفیف">
+                                            <span>{{ object.discount }}</span>
+                                            <span>%</span>
+                                        </div>
                                     </div>
-                                    {% if object.is_discount %}
-                                    <div class="price-discount" data-title="تخفیف">
-                                        <span>{{ object.discount }}</span>
-                                        <span>%</span>
-                                    </div>
-                                    {% endif %}
-                                </div>
+                                {% else %}
+                                        <div class="price-product defualt">
+                                            <div class="price-value">
+                                                <span> {{ object.get_price_with_discount }} </span>
+                                                <span class="price-currency">تومان</span>
+                                            </div>
+                                        </div>
+                                {% endif %}
 
 
                                 <div class="product-add default">
@@ -211,7 +231,7 @@
                             </div>
                             <div class="product-params default">
                                 <ul data-title="ویژگی‌های محصول">
-                                    {% for property in object.properties.all %}
+                                    {% for property in secondary_property %}
                                     <li>
                                         <span> {{ property.key }} : </span>
                                         <span> {{ property.value }} </span>
@@ -315,7 +335,7 @@
                                             <section>
                                                 <h3 class="params-title">مشخصات کلی</h3>
                                                 <ul class="params-list">
-                                                    {% for property in object.properties.all %}
+                                                    {% for property in primary_property %}
                                                     <li>
                                                         <div class="params-list-key">
                                                             <span class="block">{{ property.key }}</span>

@@ -26,7 +26,7 @@
                     {% if not request.user.is_authenticated %}
                     <li><a href="{% url 'account:login' %}"><i class="now-ui-icons users_single-02"></i></a></li>
                     {% else %}
-                    <li><a href="{% url 'account:profile' %}"><i class="now-ui-icons users_single-02"></i></a></li>
+                    <li><a href="{% url 'profile:profile' %}"><i class="now-ui-icons users_single-02"></i></a></li>
                     {% endif %}
                     <li><a href="#"><i class="now-ui-icons shopping_basket"></i></a></li>
                 </ul>
@@ -42,15 +42,15 @@
             <ul class="navbar-nav default">
                 {% for category in categories %}
                 <li class="sub-menu">
-                    <a href="#">{{ category.title }}</a>
+                    <a href="{% url 'product:list_category' category.id %}" >{{ category.title }}</a>
                     <ul>
                         {% for sub_category in category.sub_categories.all %}
                         <li class="sub-menu">
-                            <a href="#">{{ sub_category.title }}</a>
+                            <a href="{% url 'product:list_sub_category' sub_category.category.slug sub_category.slug %}">{{ sub_category.title }}</a>
                             <ul>
                                 {% for subset in sub_category.subsets.all %}
                                 <li>
-                                    <a href="#">{{ subset.title }}</a>
+                                    <a href="{% url 'product:list_subset' sub_category.category.slug sub_category.slug subset.slug %}">{{ subset.title }}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -105,7 +105,7 @@
                     {% else %}
 
                     <div style="  top: 14px;" class="user-login dropdown">
-                        <a href="{% url 'account:profile' %}" class="">
+                        <a href="{% url 'profile:profile' %}" class="">
                             <i class="fa fa-user" style="font-size: 30px;" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -120,7 +120,7 @@
                             <div class="basket-header">
                                 <div class="basket-total">
                                     <span>مبلغ کل خرید:</span>
-                                    <span> ۲۳,۵۰۰</span>
+                                    <span> {{ cart.get_total_price }}</span>
                                     <span> تومان</span>
                                 </div>
                                 <a href="{% url 'cart:cart' %}" class="basket-link">
@@ -153,7 +153,11 @@
                                 </li>
                                 {% endfor %}
                             </ul>
-                            <a href="#" class="basket-submit">ورود و ثبت سفارش</a>
+                            {% if not request.user.is_authenticated %}
+                                <a href="{% url 'account:login' %}" class="basket-submit">ورود و ثبت سفارش</a>
+                            {% else %}
+                                <a href="#" class="basket-submit">ثبت سفارش</a>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>
@@ -164,16 +168,16 @@
                 <ul class="list float-right">
                     {% for category in categories %}
                     <li class="list-item list-item-has-children mega-menu mega-menu-col-5">
-                        <a class="nav-link" href="#">{{ category.title }}</a>
+                        <a class="nav-link" href="{% url 'product:list_category' category.slug %}">{{ category.title }}</a>
                         <ul class="sub-menu nav">
                             {% for sub_category in category.sub_categories.all %}
                             <li class="list-item list-item-has-children">
                                 <i class="now-ui-icons arrows-1_minimal-left"></i>
-                                <a class="main-list-item nav-link" href="#">{{ sub_category.title }}</a>
+                                <a class="main-list-item nav-link" href="{% url 'product:list_sub_category' sub_category.category.slug sub_category.slug %}">{{ sub_category.title }}</a>
                                 <ul class="sub-menu nav">
                                     {% for subset in sub_category.subsets.all %}
                                     <li class="list-item">
-                                        <a class="nav-link" href="#">{{ subset.title }}</a>
+                                        <a class="nav-link" href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">{{ subset.title }}</a>
                                     </li>
                                     {% endfor %}
                                 </ul>

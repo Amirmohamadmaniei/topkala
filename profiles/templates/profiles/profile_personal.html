@@ -3,14 +3,22 @@
 {% load jalali_tags %}
 
 {% block content %}
-
 <!-- main -->
 <main class="profile-user-page default">
     <div class="container">
         <div class="row">
             <div class="profile-page col-xl-9 col-lg-8 col-md-12 order-2">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-12">
+
+                        {% if messages %}
+                        {% for msg in messages %}
+                            <div class="{{ msg.tags }} col-sm-12 col-md-6" role="alert">
+                                {{ msg }}
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+
                         <div class="col-12">
                             <h1 class="title-tab-content">اطلاعات شخصی</h1>
                         </div>
@@ -73,82 +81,24 @@
                                         {% endif %}
                                     </p>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="col-12">
-                            <h1 class="title-tab-content">لیست آخرین علاقمندی ها</h1>
-                        </div>
-                        <div class="content-section default">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="profile-recent-fav-row">
-                                        <a href="#" class="profile-recent-fav-col profile-recent-fav-col-thumb">
-                                            <img src="{% static 'img/cart/4560621.jpg' %}"></a>
-                                        <div class="profile-recent-fav-col profile-recent-fav-col-title">
-                                            <a href="#">
-                                                <h4 class="profile-recent-fav-name">
-                                                    گوشی موبایل اپل مدل iPhone XR دو سیم کارت ظرفیت 256 گیگابایت
-                                                </h4>
-                                            </a>
-                                            <div class="profile-recent-fav-price">ناموجود</div>
-                                        </div>
-                                        <div class="profile-recent-fav-col profile-recent-fav-col-actions">
-                                            <button class="btn-action btn-action-remove">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="profile-recent-fav-row">
-                                        <a href="#" class="profile-recent-fav-col profile-recent-fav-col-thumb">
-                                            <img src="{% static 'img/cart/3794614.jpg' %}"></a>
-                                        <div class="profile-recent-fav-col profile-recent-fav-col-title">
-                                            <a href="#">
-                                                <h4 class="profile-recent-fav-name">
-                                                    گوشی موبایل اپل مدل iPhone XR دو سیم کارت ظرفیت 256 گیگابایت
-                                                </h4>
-                                            </a>
-                                            <div class="profile-recent-fav-price">ناموجود</div>
-                                        </div>
-                                        <div class="profile-recent-fav-col profile-recent-fav-col-actions">
-                                            <button class="btn-action btn-action-remove">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-12 text-center">
-                                    <a href="#" class="btn-link-border form-account-link">
-                                        مشاهده و ویرایش لیست مورد علاقه
+                                    <a href="{% url 'profile:profile_edit' %}"
+                                       class="btn-link-border form-account-link">
+                                        ویرایش اطلاعات شخصی
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <h1 class="title-tab-content">آخرین سفارش ها</h1>
-                    </div>
-                    <div class="col-12 text-center">
-                        <div class="content-section pt-5 pb-5">
-                            <div class="icon-empty">
-                                <i class="now-ui-icons travel_info"></i>
-                            </div>
-                            <h1 class="text-empty">موردی برای نمایش وجود ندارد!</h1>
-                        </div>
-                    </div>
-                </div>
             </div>
 
 
-            {% include 'account/includes/profile_sidebar.html' %}
+            {% include 'profiles/includes/profile_sidebar.html' %}
 
 
         </div>
     </div>
 </main>
 <!-- main -->
-
 {% endblock %}

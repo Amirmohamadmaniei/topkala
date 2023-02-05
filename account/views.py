@@ -2,10 +2,9 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import UserLoginForm, UserRegisterForm, ChangePasswordForm, EditProfileForm
+from .forms import UserLoginForm, UserRegisterForm, ChangePasswordForm
 from .models import User
 from .mixins import NotLoginRequiredMixin
-from django.contrib import messages
 
 
 class LoginView(NotLoginRequiredMixin, View):
@@ -66,47 +65,11 @@ class ChangePassword(LoginRequiredMixin, View):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
-            print('ok')
             cd = form.cleaned_data
             user = User.objects.get(pk=request.user.pk)
             if user.check_password(cd['old_password']):
                 user.set_password(cd['password'])
-                return redirect('account:profile')
+                return redirect('profile:profile')
             else:
                 form.add_error('old_password', 'رمز عبور اشتباه است')
-        print('nok')
-        return render(request, self.template_name, {'form': form})
-
-
-class ProfileView(LoginRequiredMixin, View):
-    login_url = 'account:login'
-
-    def get(self, request):
-        return render(request, 'account/profile.html')
-
-
-class ProfilePersonalView(View):
-    def get(self, request):
-        return render(request, 'account/profile_personal.html')
-
-
-class ProfileEditView(View):
-    form_class = EditProfileForm
-    template_name = 'account/profile_edit.html'
-
-    def setup(self, request, *args, **kwargs):
-        self.user = User.objects.get(pk=request.user.pk)
-        super().setup(request, *args, **kwargs)
-
-    def get(self, request):
-        form = self.form_class(instance=self.user)
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        form = self.form_class(request.POST, instance=self.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'اطلاعات شما با موفقیت بروزرسانی شد', extra_tags='alert alert-success')
-            return redirect('account:profile_personal')
-        messages.error(request, 'اطلاعات شما با موفقیت بروزرسانی شد', extra_tags='alert alert-danger')
         return render(request, self.template_name, {'form': form})

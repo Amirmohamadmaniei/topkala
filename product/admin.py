@@ -16,6 +16,7 @@ class SubDescriptionInline(admin.TabularInline):
 
 class ProductAdmin(admin.ModelAdmin):
     inlines = (ImageInline, PropertyInline, SubDescriptionInline)
+    raw_id_fields = ('color',)
 
 
 admin.site.register(Product, ProductAdmin)

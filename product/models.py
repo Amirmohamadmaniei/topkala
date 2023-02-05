@@ -46,24 +46,40 @@ class Category(models.Model):
     title = models.CharField(max_length=20)
     image = models.ImageField(upload_to='category/', null=True)
 
+    slug = models.SlugField(allow_unicode=True, blank=True)
+
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(args, **kwargs)
 
 
 class SubCategory(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='sub_categories')
     title = models.CharField(max_length=20)
+    slug = models.SlugField(allow_unicode=True, blank=True)
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(args, **kwargs)
 
 
 class Subset(models.Model):
     category = models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name='subsets')
     title = models.CharField(max_length=20)
+    slug = models.SlugField(allow_unicode=True, blank=True)
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(args, **kwargs)
 
 
 class Image(models.Model):

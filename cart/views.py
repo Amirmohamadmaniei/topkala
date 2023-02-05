@@ -7,19 +7,18 @@ from .forms import AddCartForm
 
 class CartDetailView(View):
     def dispatch(self, request, *args, **kwargs):
-        print(request.session['cart'])
         if not request.session['cart']:
             return redirect('cart:cart_empty')
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
         cart = Cart(request)
-        return render(request, 'cart/cart.html', {'cart': cart})
+        return render(request, 'cart/cart.html', {'cart': cart, 'cart_total_price': cart.get_total_price(),
+                                                  'get_total_price_with_post': cart.get_total_price_with_post})
 
 
 class CartDetailEmptyView(View):
     def dispatch(self, request, *args, **kwargs):
-        print(request.session['cart'])
         if request.session['cart']:
             return redirect('cart:cart')
         return super().dispatch(request, *args, **kwargs)

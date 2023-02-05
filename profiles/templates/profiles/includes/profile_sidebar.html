@@ -29,7 +29,7 @@
                 حساب کاربری شما
             </button>
             <div class="dropdown-menu dropdown-menu-right text-right">
-                <a href="{% url 'account:profile' %}" class="dropdown-item active-menu">
+                <a href="{% url 'profile:profile' %}" class="dropdown-item active-menu">
                     <i class="now-ui-icons users_single-02"></i>
                     پروفایل
                 </a>
@@ -45,7 +45,7 @@
                     <i class="now-ui-icons ui-2_favourite-28"></i>
                     لیست علاقمندی ها
                 </a>
-                <a href="{% url 'account:profile_personal' %}" class="dropdown-item">
+                <a href="{% url 'profile:profile_personal' %}" class="dropdown-item">
                     <i class="now-ui-icons business_badge"></i>
                     اطلاعات شخصی
                 </a>
@@ -56,7 +56,7 @@
         <div class="profile-menu-header">حساب کاربری شما</div>
         <ul class="profile-menu-items">
             <li>
-                <a href="{% url 'account:profile' %}" class="active">
+                <a href="{% url 'profile:profile' %}" class="active">
                     <i class="now-ui-icons users_single-02"></i>
                     پروفایل
                 </a>
@@ -74,13 +74,13 @@
                 </a>
             </li>
             <li>
-                <a href="profile-favorites.html">
+                <a href="{% url 'profile:favorites' %}">
                     <i class="now-ui-icons ui-2_favourite-28"></i>
                     لیست علاقمندی ها
                 </a>
             </li>
             <li>
-                <a href="{% url 'account:profile_personal' %}">
+                <a href="{% url 'profile:profile_personal' %}">
                     <i class="now-ui-icons business_badge"></i>
                     اطلاعات شخصی
                 </a>

@@ -704,14 +704,24 @@
                                     <h2 class="post-title">
                                         <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
                                     </h2>
+                                    {% if product.discount %}
                                     <div class="price">
                                         <div class="text-center">
                                             <del><span>{{ product.price }}<span> تومان </span></span></del>
                                         </div>
                                         <div class="text-center">
-                                            <ins><span>{{ product.get_price_with_discount }}<span> تومان </span></span></ins>
+                                            <ins><span>{{ product.get_price_with_discount }}<span> تومان </span></span>
+                                            </ins>
                                         </div>
                                     </div>
+                                    {% else %}
+                                    <div class="price">
+                                        <div class="text-center">
+                                            <ins><span>{{ product.price }}<span> تومان </span></span>
+                                            </ins>
+                                        </div>
+                                    </div>
+                                    {% endif %}
                                 </div>
                                 {% endfor %}
 

@@ -23,7 +23,8 @@ class Cart:
     def add(self, product, quantity, color):
         unique = self.unique_id_generate(product.id, color)
         if unique not in self.cart:
-            self.cart[unique] = {'quantity': 0, 'color': color, 'id': str(product.id)}
+            self.cart[unique] = {'id': str(product.id), 'quantity': 0, 'color': color,
+                                 'price': str(product.get_price_with_discount)}
         self.cart[unique]['quantity'] += quantity
         self.save()
 
@@ -34,6 +35,12 @@ class Cart:
 
     def unique_id_generate(self, id, color):
         return f'{id}-{color}'
+
+    def get_total_price(self):
+        return sum(int(item['price']) * int(item['quantity']) for item in self.cart.values())
+
+    def get_total_price_with_post(self):
+        return sum(int(item['price']) * int(item['quantity']) for item in self.cart.values()) + 30000
 
     def save(self):
         self.session.modified = True

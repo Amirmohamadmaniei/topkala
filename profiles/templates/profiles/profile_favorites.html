@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- main -->
+<main class="profile-user-page default">
+    <div class="container">
+        <div class="row">
+            <div class="profile-page col-xl-9 col-lg-8 col-md-12 order-2">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-12">
+                            <h1 class="title-tab-content">لیست علاقمندی ها</h1>
+                        </div>
+                        <div class="content-section default">
+                            <div class="row">
+
+                                {% for favorite in product_favorites %}
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="profile-recent-fav-row">
+                                        <a href="{{ favorite.product.get_absolute_url }}"
+                                           class="profile-recent-fav-col profile-recent-fav-col-thumb">
+                                            <img src="{{ favorite.product.images.first.image.url }}"></a>
+                                        <div class="profile-recent-fav-col profile-recent-fav-col-title">
+                                            <a href="{{ favorite.product.get_absolute_url }}">
+                                                <h4 class="profile-recent-fav-name">
+                                                    {{ favorite.product.title }}
+                                                </h4>
+                                            </a>
+                                            <div class="profile-recent-fav-price">
+                                               {{ favorite.product.get_price_with_discount }} تومان
+                                            </div>
+                                        </div>
+                                        <div class="profile-recent-fav-col profile-recent-fav-col-actions">
+                                            <a href="{% url 'profile:remove_favorite' favorite.product.id %}">
+                                                <button class="btn-action btn-action-remove">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div class="col-12 text-left mb-3">
+                                            <a href="{{ favorite.product.get_absolute_url }}" class="view-product">مشاهده محصول</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="col-md-6 col-sm-12">
+                                    بدون محصول مورد علاقع
+                                </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {% include 'profiles/includes/profile_sidebar.html' %}
+
+
+        </div>
+    </div>
+</main>
+<!-- main -->
+
+{% endblock %}
