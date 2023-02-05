@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block content %}
+
 <!-- main -->
 <main class="single-product default">
     <div class="container">
@@ -145,69 +147,63 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="product-variants default">
-                                <span>انتخاب رنگ: </span>
+                            <form action="{% url 'cart:add' object.pk %}" method="post">
+                                {% csrf_token %}
+                                <div class="product-variants default">
+                                    <span>انتخاب رنگ: </span>
 
 
-                                {% for color in object.color.all %}
-                                <div class="radio">
-                                    <input type="radio" name="radio1"
-                                           id="radio{{ forloop.counter }}" value="{{ color.title_en }}" checked>
-                                    <label for="radio{{ forloop.counter }}">
-                                        {{ color.title }}
-                                    </label>
+                                    {% for color in object.color.all %}
+                                    <div class="radio">
+                                        <input type="radio" name="color"
+                                               id="radio{{ forloop.counter }}" value="{{ color.title }}" checked>
+                                        <label for="radio{{ forloop.counter }}">
+                                            {{ color.title }}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+
+
                                 </div>
-                                {% endfor %}
-
-
-                                <!--                                <div class="radio">-->
-                                <!--                                    <input type="radio" name="radio1" id="radio1" value="option1">-->
-                                <!--                                    <label for="radio1">-->
-                                <!--                                        خاکستری-->
-                                <!--                                    </label>-->
-                                <!--                                </div>-->
-
-                                <!--                                <div class="radio">-->
-                                <!--                                    <input type="radio" name="radio1" id="radio2" value="option2" ="">-->
-                                <!--                                    <label for="radio2">-->
-                                <!--                                        نقره ای-->
-                                <!--                                    </label>-->
-                                <!--                                </div>-->
-
-                            </div>
-                            <div class="product-guarantee default">
-                                <i class="fa fa-check-circle"></i>
-                                <p class="product-guarantee-text">گارانتی اصالت و سلامت فیزیکی کالا</p>
-                            </div>
-                            <div class="product-delivery-seller default">
-                                <p>
-                                    <!--                                    <i class="now-ui-icons shopping_shop"></i>-->
-                                    <!--                                    <span>فروشنده:‌</span>-->
-                                    <!--                                    <a href="#" class="btn-link-border">ناسا</a>-->
-                                </p>
-                            </div>
-                            <del class="text-muted"> {{ object.price }} تومان
-
-                            <div class="price-product defualt">
-                                <div class="price-value">
-                                    <span> {{ object.get_price_with_discount }} </span>
-                                    <span class="price-currency">تومان</span>
+                                <div class="product-guarantee default">
+                                    <i class="fa fa-check-circle"></i>
+                                    <p class="product-guarantee-text">گارانتی اصالت و سلامت فیزیکی کالا</p>
                                 </div>
-                                {% if object.is_discount %}
-                                <div class="price-discount" data-title="تخفیف">
-                                    <span>{{ object.discount }}</span>
-                                    <span>%</span>
+                                <div class="product-delivery-seller default">
+                                    <p>
+                                    </p>
                                 </div>
-                                {% endif %}
-                            </div>
-                            <div class="product-add default">
-                                <div class="parent-btn">
-                                    <a href="#" class="dk-btn dk-btn-info">
-                                        افزودن به سبد خرید
-                                        <i class="now-ui-icons shopping_cart-simple"></i>
-                                    </a>
+                                <del class="text-muted"> {{ object.price }} تومان</del>
+
+                                <div class="price-product defualt">
+                                    <div class="price-value">
+                                        <span> {{ object.get_price_with_discount }} </span>
+                                        <span class="price-currency">تومان</span>
+                                    </div>
+                                    {% if object.is_discount %}
+                                    <div class="price-discount" data-title="تخفیف">
+                                        <span>{{ object.discount }}</span>
+                                        <span>%</span>
+                                    </div>
+                                    {% endif %}
                                 </div>
-                            </div>
+
+
+                                <div class="product-add default">
+                                    <div class="parent-btn">
+                                        <button type="submit" class="dk-btn dk-btn-info">
+                                            افزودن به سبد خرید
+                                            <i class="now-ui-icons shopping_cart-simple"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+
+                                <div class="product-add default">
+                                    {{ form.quantity }}
+                                </div>
+
+                            </form>
                         </div>
                         <div class="col-lg-4 col-md-6 col-sm-12 center-breakpoint">
                             <div class="product-guaranteed default">

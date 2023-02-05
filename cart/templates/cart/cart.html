@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<!-- main -->
+<main class="cart-page default">
+    <div class="container">
+        <div class="row">
+            <div class="cart-page-content col-xl-9 col-lg-8 col-md-12 order-1">
+                <div class="cart-page-title">
+                    <h1>سبد خرید</h1>
+                </div>
+                <div class="table-responsive checkout-content default">
+                    <table class="table">
+                        <tbody>
+
+                        {% for item in cart %}
+                        <tr class="checkout-item">
+                            <td>
+                                <img style="height: 115px;" src="{{ item.product.images.first.image.url }}" alt="">
+                                <a href="{% url 'cart:remove' item.unique_id %}" class="checkout-btn-remove"></a>
+                            </td>
+                            <td>
+                                <h3 class="checkout-title">
+                                    <a href="{{ item.product.get_absolute_url }}">
+                                        {{ item.product.title }}
+                                    </a>
+                                </h3>
+                            </td>
+                            <td>{{ item.quantity }} عدد</td>
+                            <td>{{ item.color }}</td>
+                            <td>{{ item.product.price }} تومان</td>
+                            <td>%{{ item.product.discount }}</td>
+                            <td>{{ item.product.get_price_with_discount }} تومان</td>
+                            <td>{{ item.total }} تومان</td>
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <aside class="cart-page-aside col-xl-3 col-lg-4 col-md-6 center-section order-2">
+                <div class="checkout-aside">
+                    <div class="checkout-summary">
+                        <div class="checkout-summary-main">
+                            <ul class="checkout-summary-summary">
+                                <li><span>مبلغ کل (۱ کالا)</span><span>۱۵,۳۹۰,۰۰۰ تومان</span></li>
+                                <li>
+                                    <span>هزینه ارسال</span>
+                                    <span>وابسته به آدرس<span class="wiki wiki-holder"><span
+                                            class="wiki-sign"></span>
+                                                    <div class="wiki-container js-dk-wiki is-right">
+                                                        <div class="wiki-arrow"></div>
+                                                        <p class="wiki-text">
+                                                            هزینه ارسال مرسولات می‌تواند وابسته به شهر و آدرس گیرنده
+                                                            متفاوت باشد. در
+                                                            صورتی که هر
+                                                            یک از مرسولات حداقل ارزشی برابر با ۱۰۰هزار تومان داشته باشد،
+                                                            آن مرسوله
+                                                            بصورت رایگان
+                                                            ارسال می‌شود.<br>
+                                                            "حداقل ارزش هر مرسوله برای ارسال رایگان، می تواند متغیر
+                                                            باشد."
+                                                        </p>
+                                                    </div>
+                                                </span></span>
+                                </li>
+                            </ul>
+                            <div class="checkout-summary-devider">
+                                <div></div>
+                            </div>
+                            <div class="checkout-summary-content">
+                                <div class="checkout-summary-price-title">مبلغ قابل پرداخت:</div>
+                                <div class="checkout-summary-price-value">
+                                    <span class="checkout-summary-price-value-amount">۱۵,۳۹۰,۰۰۰</span>تومان
+                                </div>
+                                <a href="#" class="selenium-next-step-shipping">
+                                    <div class="parent-btn">
+                                        <button class="dk-btn dk-btn-info">
+                                            ادامه ثبت سفارش
+                                            <i class="now-ui-icons shopping_basket"></i>
+                                        </button>
+                                    </div>
+                                </a>
+                                <div>
+                                            <span>
+                                                کالاهای موجود در سبد شما ثبت و رزرو نشده‌اند، برای ثبت سفارش مراحل بعدی
+                                                را تکمیل
+                                                کنید.
+                                            </span>
+                                    <span class="wiki wiki-holder"><span class="wiki-sign"></span>
+                                                <div class="wiki-container is-right">
+                                                    <div class="wiki-arrow"></div>
+                                                    <p class="wiki-text">
+                                                        محصولات موجود در سبد خرید شما تنها در صورت ثبت و پرداخت سفارش
+                                                        برای شما رزرو
+                                                        می‌شوند. در
+                                                        صورت عدم ثبت سفارش، تاپ کالا هیچگونه مسئولیتی در قبال تغییر
+                                                        قیمت یا موجودی
+                                                        این کالاها
+                                                        ندارد.
+                                                    </p>
+                                                </div>
+                                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="checkout-feature-aside">
+                        <ul>
+                            <li class="checkout-feature-aside-item checkout-feature-aside-item-guarantee">
+                                هفت روز
+                                ضمانت تعویض
+                            </li>
+                            <li class="checkout-feature-aside-item checkout-feature-aside-item-cash">
+                                پرداخت در محل با
+                                کارت بانکی
+                            </li>
+                            <li class="checkout-feature-aside-item checkout-feature-aside-item-express">
+                                تحویل اکسپرس
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
+<!-- main -->
+{% endblock %}

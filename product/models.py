@@ -1,5 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -14,7 +15,7 @@ class Product(models.Model):
     subset = models.ForeignKey('Subset', on_delete=models.CASCADE, related_name='products')
 
     price = models.IntegerField(validators=[MinValueValidator(0)])
-    is_discount = models.BooleanField(default=False)
+    # is_discount = models.BooleanField(default=False)
     discount = models.IntegerField(default=None, validators=[MaxValueValidator(90), MinValueValidator(0)])
 
     color = models.ManyToManyField('Color')
@@ -29,7 +30,12 @@ class Product(models.Model):
 
     @property
     def get_price_with_discount(self):
-        return self.price - ((self.discount * self.price) // 100)
+        if self.discount > 0:
+            return self.price - ((self.discount * self.price) // 100)
+        return self.price
+
+    def get_absolute_url(self):
+        return reverse('product:detail', args=(self.pk, self.slug))
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title, allow_unicode=True)

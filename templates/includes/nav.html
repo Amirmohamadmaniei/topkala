@@ -23,7 +23,11 @@
                     <button type="submit"><img src="{% static 'img/search.png' %}" alt=""></button>
                 </form>
                 <ul>
-                    <li><a href="#"><i class="now-ui-icons users_single-02"></i></a></li>
+                    {% if not request.user.is_authenticated %}
+                    <li><a href="{% url 'account:login' %}"><i class="now-ui-icons users_single-02"></i></a></li>
+                    {% else %}
+                    <li><a href="{% url 'account:profile' %}"><i class="now-ui-icons users_single-02"></i></a></li>
+                    {% endif %}
                     <li><a href="#"><i class="now-ui-icons shopping_basket"></i></a></li>
                 </ul>
             </div>
@@ -83,6 +87,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-12">
+                    {% if not request.user.is_authenticated %}
                     <div class="user-login dropdown">
                         <a href="#" class="btn btn-neutral dropdown-toggle" data-toggle="dropdown"
                            id="navbarDropdownMenuLink1">
@@ -97,8 +102,17 @@
                             </div>
                         </ul>
                     </div>
+                    {% else %}
+
+                    <div style="  top: 14px;" class="user-login dropdown">
+                        <a href="{% url 'account:profile' %}" class="">
+                            <i class="fa fa-user" style="font-size: 30px;" aria-hidden="true"></i>
+                        </a>
+                    </div>
+
+                    {% endif %}
                     <div class="cart dropdown">
-                        <a href="#" class="btn dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink1">
+                        <a href="" class="btn dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink1">
                             <i class="now-ui-icons shopping_cart-simple"></i>
                             سبد خرید
                         </a>
@@ -109,32 +123,35 @@
                                     <span> ۲۳,۵۰۰</span>
                                     <span> تومان</span>
                                 </div>
-                                <a href="#" class="basket-link">
+                                <a href="{% url 'cart:cart' %}" class="basket-link">
                                     <span>مشاهده سبد خرید</span>
                                     <div class="basket-arrow"></div>
                                 </a>
                             </div>
                             <ul class="basket-list">
+                                {% for item in cart %}
                                 <li>
                                     <a href="#" class="basket-item">
                                         <button class="basket-item-remove"></button>
                                         <div class="basket-item-content">
                                             <div class="basket-item-image">
-                                                <img alt="" src="{% static 'img/cart/2324935.jpg' %}">
+                                                <img alt="" src="{{ item.product.images.first.image.url }}">
                                             </div>
                                             <div class="basket-item-details">
-                                                <div class="basket-item-title">هندزفری بلوتوث مدل S530
+                                                <div class="basket-item-title">
+                                                    {{ item.product.title }}
                                                 </div>
                                                 <div class="basket-item-params">
                                                     <div class="basket-item-props">
-                                                        <span> ۱ عدد</span>
-                                                        <span>رنگ مشکی</span>
+                                                        <span>{{ item.quantity }} عدد</span>
+                                                        <span>{{ item.color }}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </a>
                                 </li>
+                                {% endfor %}
                             </ul>
                             <a href="#" class="basket-submit">ورود و ثبت سفارش</a>
                         </ul>
@@ -146,25 +163,25 @@
             <div class="container">
                 <ul class="list float-right">
                     {% for category in categories %}
-                        <li class="list-item list-item-has-children mega-menu mega-menu-col-5">
-                            <a class="nav-link" href="#">{{ category.title }}</a>
-                            <ul class="sub-menu nav">
-                                {% for sub_category in category.sub_categories.all %}
-                                    <li class="list-item list-item-has-children">
-                                        <i class="now-ui-icons arrows-1_minimal-left"></i>
-                                        <a class="main-list-item nav-link" href="#">{{ sub_category.title }}</a>
-                                        <ul class="sub-menu nav">
-                                            {% for subset in sub_category.subsets.all %}
-                                                <li class="list-item">
-                                                    <a class="nav-link" href="#">{{ subset.title }}</a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
+                    <li class="list-item list-item-has-children mega-menu mega-menu-col-5">
+                        <a class="nav-link" href="#">{{ category.title }}</a>
+                        <ul class="sub-menu nav">
+                            {% for sub_category in category.sub_categories.all %}
+                            <li class="list-item list-item-has-children">
+                                <i class="now-ui-icons arrows-1_minimal-left"></i>
+                                <a class="main-list-item nav-link" href="#">{{ sub_category.title }}</a>
+                                <ul class="sub-menu nav">
+                                    {% for subset in sub_category.subsets.all %}
+                                    <li class="list-item">
+                                        <a class="nav-link" href="#">{{ subset.title }}</a>
                                     </li>
-                                {% endfor %}
-                                <img src="{% static 'img/1636.png' %}" alt="">
-                            </ul>
-                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endfor %}
+                            <img src="{% static 'img/1636.png' %}" alt="">
+                        </ul>
+                    </li>
                     {% endfor %}
                     <li class="list-item amazing-item">
                         <a class="nav-link" href="#" target="_blank">شگفت‌انگیزها</a>
