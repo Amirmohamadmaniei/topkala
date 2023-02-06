@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load separator %}
 
 <body class="index-page sidebar-collapse">
 
@@ -42,7 +42,7 @@
             <ul class="navbar-nav default">
                 {% for category in categories %}
                 <li class="sub-menu">
-                    <a href="{% url 'product:list_category' category.id %}" >{{ category.title }}</a>
+                    <a href="{% url 'product:list_category' category.slug %}" >{{ category.title }}</a>
                     <ul>
                         {% for sub_category in category.sub_categories.all %}
                         <li class="sub-menu">
@@ -50,7 +50,7 @@
                             <ul>
                                 {% for subset in sub_category.subsets.all %}
                                 <li>
-                                    <a href="{% url 'product:list_subset' sub_category.category.slug sub_category.slug subset.slug %}">{{ subset.title }}</a>
+                                    <a href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">{{ subset.title }}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -120,7 +120,7 @@
                             <div class="basket-header">
                                 <div class="basket-total">
                                     <span>مبلغ کل خرید:</span>
-                                    <span> {{ cart.get_total_price }}</span>
+                                    <span> {{ cart.get_total_price|separator }}</span>
                                     <span> تومان</span>
                                 </div>
                                 <a href="{% url 'cart:cart' %}" class="basket-link">

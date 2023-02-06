@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from profiles.models import Favorite
+from .mixins import SortMixin
 from .models import Product, Category, SubCategory, Subset
 from cart.forms import AddCartForm
+from django.core.paginator import Paginator
 
 
 class ProductDetailView(View):
@@ -14,37 +16,52 @@ class ProductDetailView(View):
             is_favorite = Favorite.objects.filter(user=request.user, product=product).exists()
         else:
             is_favorite = False
-        return render(request, 'product/product_detail.html', {'object': product, 'form': form,
-                                                               'is_favorite': is_favorite,
-                                                               'primary_property': properties,
-                                                               'secondary_property': properties[0:5]})
+
+        if not request.user.ip_address in product.view.all():
+            product.view.add(request.user.ip_address)
+        return render(request, 'product/product_detail.html',
+                      {'object': product, 'form': form, 'is_favorite': is_favorite,
+                       'primary_property': properties, 'secondary_property': properties[0:5]})
 
 
-class ProductListView(View):
-    def get(self, request):
-        object_list = Product.objects.all()
-        return render(request, 'product/product_list.html', {'object_list': object_list})
-
-
-class ProductListCategoryView(View):
+class ProductListCategoryView(SortMixin, View):
     def get(self, request, category_slug):
         category = get_object_or_404(Category, slug=category_slug)
-        object_list = Product.objects.filter(category=category)
-        return render(request, 'product/product_list.html', {'object_list': object_list})
+
+        object_list = Product.objects.filter(category=category).order_by(self.sort)
+
+        paginator = Paginator(object_list, 1)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, 'product/product_list.html', {'object_list': page_obj,
+                                                             'sort': self.sort})
 
 
-class ProductListSubCategoryView(View):
+class ProductListSubCategoryView(SortMixin, View):
     def get(self, request, category_slug, sub_category_slug):
-        sub_category = get_object_or_404(SubCategory, slug=sub_category_slug)
         category = get_object_or_404(Category, slug=category_slug)
-        object_list = Product.objects.filter(category=category, sub_category=sub_category)
-        return render(request, 'product/product_list.html', {'object_list': object_list})
+        sub_category = get_object_or_404(SubCategory, slug=sub_category_slug)
+        object_list = Product.objects.filter(category=category, sub_category=sub_category).order_by(self.sort)
+
+        paginator = Paginator(object_list, 1)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, 'product/product_list.html', {'object_list': page_obj})
 
 
-class ProductListSubsetView(View):
+class ProductListSubsetView(SortMixin, View):
     def get(self, request, category_slug, sub_category_slug, subset_slug):
-        subset = get_object_or_404(Subset, slug=subset_slug)
-        sub_category = get_object_or_404(SubCategory, slug=sub_category_slug)
         category = get_object_or_404(Category, slug=category_slug)
-        object_list = Product.objects.filter(category=category, sub_category=sub_category, subset=subset)
-        return render(request, 'product/product_list.html', {'object_list': object_list})
+        sub_category = get_object_or_404(SubCategory, slug=sub_category_slug)
+        subset = get_object_or_404(Subset, slug=subset_slug)
+
+        object_list = Product.objects.filter(category=category, sub_category=sub_category, subset=subset).order_by(
+            self.sort)
+
+        paginator = Paginator(object_list, 1)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        return render(request, 'product/product_list.html', {'object_list': page_obj})

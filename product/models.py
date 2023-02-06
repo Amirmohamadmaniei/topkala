@@ -3,7 +3,6 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
-
 class Product(models.Model):
     title = models.CharField(max_length=90)
     title_en = models.CharField(max_length=90)
@@ -20,6 +19,9 @@ class Product(models.Model):
 
     color = models.ManyToManyField('Color')
     is_available = models.BooleanField(default=True)
+
+    view = models.ManyToManyField('IP')
+    sold = models.IntegerField(default=0)
 
     slug = models.SlugField(allow_unicode=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -114,3 +116,11 @@ class Property(models.Model):
 
     def __str__(self):
         return f'{self.key} : {self.value}'
+
+
+
+class IP(models.Model):
+    ip = models.GenericIPAddressField()
+
+    def __str__(self):
+        return self.ip

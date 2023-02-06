@@ -1,4 +1,4 @@
-from product.models import Product, Category, SubCategory, SubDescription, Color, Image, Property, Subset
+from product.models import Product, Category, SubCategory, SubDescription, Color, Image, Property, Subset, IP
 from django.contrib import admin
 
 
@@ -27,3 +27,4 @@ admin.site.register(Subset)
 admin.site.register(Color)
 # admin.site.register(Image)
 # admin.site.register(Property)
+admin.site.register(IP)

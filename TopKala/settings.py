@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'cart.apps.CartConfig',
     'profiles.apps.ProfilesConfig',
+    'order.apps.OrderConfig',
 ]
 
 MIDDLEWARE = [
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'profiles.middlewares.GetIPMiddleWare',
 ]
 
 ROOT_URLCONF = 'TopKala.urls'

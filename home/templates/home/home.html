@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load separator %}
+
 
 {% block content %}
 <main class="main default">
@@ -707,17 +709,17 @@
                                     {% if product.discount %}
                                     <div class="price">
                                         <div class="text-center">
-                                            <del><span>{{ product.price }}<span> تومان </span></span></del>
+                                            <del><span>{{ product.price|separator }}<span> تومان </span></span></del>
                                         </div>
                                         <div class="text-center">
-                                            <ins><span>{{ product.get_price_with_discount }}<span> تومان </span></span>
+                                            <ins><span>{{ product.get_price_with_discount|separator }}<span> تومان </span></span>
                                             </ins>
                                         </div>
                                     </div>
                                     {% else %}
                                     <div class="price">
                                         <div class="text-center">
-                                            <ins><span>{{ product.price }}<span> تومان </span></span>
+                                            <ins><span>{{ product.price|separator }}<span> تومان </span></span>
                                             </ins>
                                         </div>
                                     </div>

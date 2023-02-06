@@ -42,5 +42,8 @@ class Cart:
     def get_total_price_with_post(self):
         return sum(int(item['price']) * int(item['quantity']) for item in self.cart.values()) + 30000
 
+    def get_count_item(self):
+        return sum(item['quantity'] for item in self.cart.values())
+
     def save(self):
         self.session.modified = True

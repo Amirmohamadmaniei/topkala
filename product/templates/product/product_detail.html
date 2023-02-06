@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load separator %}
 
 {% block content %}
 
@@ -187,10 +187,10 @@
 
 
                                 {% if object.discount %}
-                                    <del class="text-muted"> {{ object.price }} تومان</del>
+                                    <del class="text-muted"> {{ object.price|separator }} تومان</del>
                                     <div class="price-product defualt">
                                         <div class="price-value">
-                                            <span> {{ object.get_price_with_discount }} </span>
+                                            <span> {{ object.get_price_with_discount|separator }} </span>
                                             <span class="price-currency">تومان</span>
                                         </div>
 
@@ -202,7 +202,7 @@
                                 {% else %}
                                         <div class="price-product defualt">
                                             <div class="price-value">
-                                                <span> {{ object.get_price_with_discount }} </span>
+                                                <span> {{ object.get_price_with_discount|separator }} </span>
                                                 <span class="price-currency">تومان</span>
                                             </div>
                                         </div>

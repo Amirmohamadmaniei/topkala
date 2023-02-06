@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load separator %}
 
 
 {% block content %}
@@ -18,68 +19,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="box">
-                    <div class="box-header">
-                        <div class="box-toggle" data-toggle="collapse" href="#collapseExample1" role="button"
-                             aria-expanded="true" aria-controls="collapseExample1">
-                            دسته بندی نتایج
-                            <i class="now-ui-icons arrows-1_minimal-down"></i>
-                        </div>
-                    </div>
-                    <div class="box-content">
-                        <div class="collapse show" id="collapseExample1">
-                            <div class="ui-input ui-input--quick-search">
-                                <input type="text" class="ui-input-field ui-input-field--cleanable"
-                                       placeholder="نام دسته بندی مورد نظر را بنویسید…">
-                                <span class="ui-input-cleaner"></span>
-                            </div>
-                            <div class="filter-option">
-                                <div class="checkbox">
-                                    <input id="checkbox1" type="checkbox">
-                                    <label for="checkbox1">
-                                        ریمکس
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox2" type="checkbox">
-                                    <label for="checkbox2">
-                                        باسئوس
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox3" type="checkbox">
-                                    <label for="checkbox3">
-                                        اپل
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox4" type="checkbox">
-                                    <label for="checkbox4">
-                                        نیلکین
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox5" type="checkbox">
-                                    <label for="checkbox5">
-                                        راک
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox6" type="checkbox">
-                                    <label for="checkbox6">
-                                        توتو
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox7" type="checkbox">
-                                    <label for="checkbox7">
-                                        فراری
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+
                 <div class="box">
                     <div class="box-header">
                         <div class="box-toggle" data-toggle="collapse" href="#collapseExample2" role="button"
@@ -90,70 +31,55 @@
                     </div>
                     <div class="box-content">
                         <div class="collapse show" id="collapseExample2">
-                            <div class="ui-input ui-input--quick-search">
-                                <input type="text" class="ui-input-field ui-input-field--cleanable"
-                                       placeholder="نام برند مورد نظر را بنویسید…">
-                                <span class="ui-input-cleaner"></span>
-                            </div>
                             <div class="filter-option">
                                 <div class="checkbox">
                                     <input id="checkbox8" type="checkbox">
                                     <label for="checkbox8">
-                                        ریمکس
+                                        samsung
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <input id="checkbox9" type="checkbox">
                                     <label for="checkbox9">
-                                        باسئوس
+                                        apple
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <input id="checkbox10" type="checkbox">
                                     <label for="checkbox10">
-                                        اپل
+                                        xiaomi
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <input id="checkbox11" type="checkbox">
                                     <label for="checkbox11">
-                                        نیلکین
+                                        nokia
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <input id="checkbox12" type="checkbox">
                                     <label for="checkbox12">
-                                        راک
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox13" type="checkbox">
-                                    <label for="checkbox13">
-                                        توتو
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <input id="checkbox14" type="checkbox">
-                                    <label for="checkbox14">
-                                        فراری
+                                        huawei
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="box">
-                    <div class="box-content">
-                        <input type="checkbox" name="checkbox" class="bootstrap-switch" checked/>
-                        <label for="">فقط کالاهای موجود</label>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="box-content">
-                        <input type="checkbox" name="checkbox" class="bootstrap-switch" checked/>
-                        <label for="">فقط کالاهای آماده ارسال</label>
-                    </div>
-                </div>
+
+
+<!--                <div class="box">-->
+<!--                    <div class="box-content">-->
+<!--                        <form method="get">-->
+<!--&lt;!&ndash;                            <input type="checkbox" name="available" class="bootstrap-switch" />&ndash;&gt;-->
+<!--                            {{ form.available }}-->
+<!--                            <input class="btn btn-dark" style="position: absolute; left:30px;" type="submit" value="اعمال کردن">-->
+<!--                        </form>-->
+<!--                        <label>فقط کالاهای موجود</label>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
             </aside>
             <div class="col-12 col-sm-12 col-md-8 col-lg-9 order-2">
                 <div class="breadcrumb-section default">
@@ -171,29 +97,28 @@
                     <div class="listing-header default">
                         <ul class="listing-sort nav nav-tabs justify-content-center" role="tablist"
                             data-label="مرتب‌سازی بر اساس :">
+
+
                             <li>
-                                <a class="active" data-toggle="tab" href="#related" role="tab"
-                                   aria-expanded="false">مرتبط‌ترین</a>
+                                <a href="?sort=title" class="active" aria-expanded="false">حروف الفبا</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#most-view" role="tab"
-                                   aria-expanded="false">پربازدیدترین</a>
+                                <a href="?sort=view" aria-expanded="false">پربازدیدترین</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#new" role="tab" aria-expanded="true">جدیدترین</a>
+                                <a href="?sort=-created" aria-expanded="true">جدیدترین</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#most-seller" role="tab"
-                                   aria-expanded="false">پرفروش‌ترین‌</a>
+                                <a href="?sort=-sold" aria-expanded="false">پرفروش‌ترین‌</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#down-price" role="tab"
-                                   aria-expanded="false">ارزان‌ترین</a>
+                                <a href="?sort=price" aria-expanded="false">ارزان‌ترین</a>
                             </li>
                             <li>
-                                <a data-toggle="tab" href="#top-price" role="tab"
+                                <a href="?sort=-price" role="tab"
                                    aria-expanded="false">گران‌ترین</a>
                             </li>
+
                         </ul>
                     </div>
                     <div class="tab-content default text-center">
@@ -227,12 +152,13 @@
                                                             {% if object.discount %}
                                                             <div class="price-value-wrapper">
                                                                 <small>
-                                                                    <del> {{ object.price }} <span class="price-currency">تومان</span></del>
+                                                                    <del> {{ object.price|separator }} <span
+                                                                            class="price-currency">تومان</span></del>
                                                                 </small>
                                                             </div>
                                                             {% endif %}
                                                             <div class="price-value-wrapper text-danger">
-                                                                {{ object.get_price_with_discount }} <span
+                                                                {{ object.get_price_with_discount|separator }} <span
                                                                     class="price-currency">تومان</span>
                                                             </div>
                                                         </div>
@@ -243,38 +169,52 @@
                                         </div>
                                     </li>
                                     {% endfor %}
-
                                 </ul>
                             </div>
                         </div>
-
                     </div>
+
                     <div class="pager default text-center">
                         <ul class="pager-items">
+
+
+                            {% if object_list.has_previous or object_list.has_next %}
+                            {% if object_list.has_previous %}
                             <li>
-                                <a class="pager-item is-active" href="#">۱</a>
-                            </li>
-                            <li>
-                                <a class="pager-item" href="#">۲</a>
-                            </li>
-                            <li>
-                                <a class="pager-item" href="#">۳</a>
-                            </li>
-                            <li>
-                                <a class="pager-item" href="#">۴</a>
-                            </li>
-                            <li>
-                                <a class="pager-item" href="#">۵</a>
+                                <a href="?page={{ object_list.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                                   id="pager-previous" class="pager-next"></a>
                             </li>
                             <line class="pager-items--partition"></line>
+                            {% endif %}
+
+                            {% for num in object_list.paginator.page_range %}
                             <li>
-                                <a class="pager-next"></a>
+                                {% if num == object_list.number %}
+                                <a href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pager-item is-active">{{ num }}</a>
+                                {% else %}
+                                <a href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pager-item">{{ num }}</a>
+
+                                {% endif %}
                             </li>
+                            {% endfor %}
+
+                            {% if object_list.has_next %}
+                            <line class="pager-items--partition"></line>
+                            <li>
+                                <a href="?page={{ object_list.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                                   class="pager-next"></a>
+                            </li>
+                            {% endif %}
+                            {% endif %}
+
                         </ul>
                     </div>
+
+
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </main>
 <!-- main -->
