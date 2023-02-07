@@ -37,7 +37,6 @@ class CartAdd(View):
             color = request.POST.get('color')
             cart = Cart(request)
             cart.add(product, quantity, color)
-            return redirect('cart:cart')
         return redirect('product:detail', pk, product.slug)
 
 

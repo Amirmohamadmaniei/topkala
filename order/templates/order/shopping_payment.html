@@ -1,0 +1,285 @@
+{% load static %}
+{% include 'includes/header_links.html' %}
+{% load separator %}
+
+<body>
+
+<div class="wrapper default shopping-page">
+    <!-- header-shopping -->
+    <header class="header-shopping default">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center pt-2">
+                    <div class="header-shopping-logo default">
+                        <a href="#">
+                            <img src="{% static 'img/logo.png' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <ul class="checkout-steps">
+                        <li>
+                            <a href="shopping.html" class="active">
+                                <span>اطلاعات ارسال</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="shopping-payment.html" class="active">
+                                <span>پرداخت</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="shopping-complete-buy.html">
+                                <span>اتمام خرید و ارسال</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-shopping -->
+
+    <!-- main-shopping -->
+    <main class="cart-page default">
+        <div class="container">
+            <div class="row">
+                <div class="cart-page-content col-xl-9 col-lg-8 col-md-12 order-1">
+                    <div class="cart-page-title">
+                        <h1>انتخاب شیوه پرداخت</h1>
+                    </div>
+                    <section class="page-content default">
+                        <form action="">
+                            <ul class="checkout-paymethod">
+
+                                <li>
+                                    <div class="checkout-paymethod-item checkout-paymethod-item-cc has-options">
+                                        <div class="radio">
+                                            <input type="radio" name="radio" id="radio1" value="option1" checked>
+                                            <label for="radio1">
+                                                <div>
+                                                    <h4 class="checkout-paymethod-title">
+                                                        <div>
+                                                            <p class="checkout-paymethod-title-label">
+                                                                پرداخت اینترنتی ( آنلاین با تمامی کارت‌های بانکی )
+                                                            </p>
+                                                        </div>
+                                                        <span>سرعت بیشتر در ارسال و پردازش سفارش </span>
+                                                    </h4>
+                                                    <div class="checkout-paymethod-one-gateway">
+                                                        <div class="checkout-paymethod-one-gateway-img">
+                                                            <img
+                                                                    src="{% static 'img/cart/818e9426.svg' %}">
+                                                        </div>
+                                                        درگاه دیجی‌پی - سامانه پرداخت هوشمند دیجی‌کالا
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </form>
+                        <div class="headline">
+                            <span>خلاصه سفارش</span>
+                        </div>
+                        <div class="checkout-order-summary">
+                            <div class="accordion checkout-order-summary-item" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header checkout-order-summary-header" id="headingOne">
+                                        <h2 class="mb-0">
+                                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                                                    data-target="#collapseOne" aria-expanded="false"
+                                                    aria-controls="collapseOne">
+                                                <div class="checkout-order-summary-row">
+                                                    <div
+                                                            class="checkout-order-summary-col checkout-order-summary-col-post-time">
+                                                        مرسوله ۱
+                                                        از ۱
+                                                        <span class="fs-sm">({{ order.get_count_item }} کالا)</span>
+                                                    </div>
+                                                    <div
+                                                            class="checkout-order-summary-col checkout-order-summary-col-how-to-send">
+                                                        <span class="dl-none-sm">نحوه ارسال</span>
+                                                        <span class="dl-none-sm">
+                                                                پست پیشتاز با ظرفیت اختصاصی برای دیجی کالا
+                                                            </span>
+                                                    </div>
+                                                    <div class="checkout-order-summary-col checkout-order-summary-col-how-to-send">
+                                                        <span>ارسال از</span>
+                                                        <span class="fs-sm">
+                                                                2 روز کاری
+                                                            </span>
+                                                    </div>
+                                                    <div class="checkout-order-summary-col checkout-order-summary-col-shipping-cost">
+                                                        <span>هزینه ارسال</span>
+                                                        <span class="fs-sm">
+                                                                30,000
+                                                            </span>
+                                                    </div>
+                                                </div>
+                                                <i class="now-ui-icons arrows-1_minimal-down icon-down"></i>
+                                            </button>
+                                        </h2>
+                                    </div>
+
+                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                                         data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <div class="box">
+                                                <div class="row">
+
+                                                    {% for item in order.items.all %}
+                                                    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                                                        <div class="product-box-container">
+                                                            <div class="product-box product-box-compact">
+                                                                <a class="product-box-img">
+                                                                    <img src="{{ item.product.images.first.image.url }}">
+                                                                </a>
+                                                                <div class="product-box-title">
+                                                                    {{ item.product.title }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-12">
+                                <div class="checkout-price-options">
+                                    <div class="checkout-price-options-form">
+                                        <section class="checkout-price-options-container">
+                                            <div class="checkout-price-options-header">
+                                                <span>استفاده از کد تخفیف دیجی‌کالا</span>
+                                            </div>
+                                            <div class="checkout-price-options-content">
+                                                <p class="checkout-price-options-description">
+                                                    با ثبت کد تخفیف، مبلغ کد تخفیف از “مبلغ قابل پرداخت” کسر می‌شود.
+                                                </p>
+
+                                                <form method="post">
+                                                    {% csrf_token %}
+                                                    <div class="checkout-price-options-row">
+                                                        <div class="checkout-price-options-form-field">
+                                                            <label class="ui-input">
+                                                                {{ form_coupon.code }}
+                                                                <div class="text-center">
+                                                                    <ul>
+                                                                        <li class="text-danger">
+                                                                            {{ form_coupon.code.errors }}
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                        <div class="checkout-price-options-form-button">
+                                                            <button type="submit" class="btn-primary">
+                                                                ثبت کد تخفیف
+                                                            </button>
+                                                        </div>
+                                                </form>
+
+                                            </div>
+                                    </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+</div>
+</section>
+</div>
+<aside class="cart-page-aside col-xl-3 col-lg-4 col-md-6 center-section order-2">
+    <div class="checkout-aside">
+        <div class="checkout-summary">
+            <div class="checkout-summary-main">
+                <ul class="checkout-summary-summary">
+                    <li><span>مبلغ کل (۱ کالا)</span><span>{{ order.get_total_price|separator }} تومان</span></li>
+                    <li>
+                        <span>هزینه ارسال</span>
+                        <span>30,000 تومان</span>
+
+                    </li>
+                    {% if order.discount %}
+<!--                    <li>-->
+<!--                        <span>تخفیف (درصد)</span>-->
+<!--                        <span>{{ order.discount }} %</span>-->
+<!--                    </li>-->
+
+                    <li>
+                        <span>تخفیف (مبلغ کم شده)</span>
+                        <span>{{ order.get_discount|separator }} تومان</span>
+                    </li>
+                    {% endif %}
+                </ul>
+                <div class="checkout-summary-devider">
+                    <div></div>
+                </div>
+                <div class="checkout-summary-content">
+                    <div class="checkout-summary-price-title">مبلغ قابل پرداخت:</div>
+                    <div class="checkout-summary-price-value">
+                        <span class="checkout-summary-price-value-amount">{{ order.get_total_price_with_post|separator }}</span>تومان
+                    </div>
+                    <a href="#" class="selenium-next-step-shipping">
+                        <div class="parent-btn">
+                            <button class="dk-btn dk-btn-info">
+                                ادامه ثبت سفارش
+                                <i class="now-ui-icons shopping_basket"></i>
+                            </button>
+                        </div>
+                    </a>
+                    <div>
+                                            <span>
+                                                کالاهای موجود در سبد شما ثبت و رزرو نشده‌اند، برای ثبت سفارش مراحل بعدی
+                                                را تکمیل
+                                                کنید.
+                                            </span>
+                        <span class="wiki wiki-holder"><span class="wiki-sign"></span>
+                                                <div class="wiki-container is-right">
+                                                    <div class="wiki-arrow"></div>
+                                                    <p class="wiki-text">
+                                                        محصولات موجود در سبد خرید شما تنها در صورت ثبت و پرداخت سفارش
+                                                        برای شما رزرو
+                                                        می‌شوند. در
+                                                        صورت عدم ثبت سفارش، تاپ کالا هیچگونه مسئولیتی در قبال تغییر
+                                                        قیمت یا موجودی
+                                                        این کالاها
+                                                        ندارد.
+                                                    </p>
+                                                </div>
+                                            </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="checkout-feature-aside">
+            <ul>
+                <li class="checkout-feature-aside-item checkout-feature-aside-item-guarantee">
+                    هفت روز
+                    ضمانت تعویض
+                </li>
+                <li class="checkout-feature-aside-item checkout-feature-aside-item-cash">
+                    پرداخت در محل با
+                    کارت بانکی
+                </li>
+                <li class="checkout-feature-aside-item checkout-feature-aside-item-express">
+                    تحویل اکسپرس
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>
+</div>
+</div>
+</main>
+<!-- main-shopping -->
+
+
+{% include 'includes/footer_links.html' %}

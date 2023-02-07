@@ -20,6 +20,9 @@ class LoginView(NotLoginRequiredMixin, View):
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
+                next_url = request.GET.get('next')
+                if next_url:
+                    return redirect(next_url)
                 return redirect('home:home')
             form.add_error(None, 'نام کاربری یا کلمه عبور صحیح نمی باشد')
         return render(request, self.template_name, {'form': form})

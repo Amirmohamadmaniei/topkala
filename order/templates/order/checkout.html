@@ -1,0 +1,117 @@
+{% load static %}
+{% include 'includes/header_links.html' %}
+
+
+
+
+<body>
+    <div class="wrapper default">
+        <div class="container">
+            <div class="row">
+                <div class="main-content col-12 col-md-8 mx-auto">
+                    <div class="account-box checkout-page">
+                        <a href="#" class="logo">
+                            <img src="{% static 'img/logo.png' %}" alt="">
+                        </a>
+                        <div class="account-box-content">
+                            <form class="form-account" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="checkout-title text-right">مشخصات شما</div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-account-title">نام</div>
+                                        <div class="form-account-row">
+                                           {{ form.f_name }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-account-title">نام خانوادگی</div>
+                                        <div class="form-account-row">
+                                           {{ form.l_name }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-account-title">شماره تلفن</div>
+                                        <div class="form-account-row">
+                                            {{ form.phone }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-account-title">ایمیل</div>
+                                        <div class="form-account-row">
+                                            {{ form.email }}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="checkout-title text-right">افزودن آدرس </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-account-title">آدرس پستی</div>
+                                        <div class="form-account-row">
+                                            {{ form.address }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-account-title">کد پستی</div>
+                                        <div class="form-account-row">
+                                       {{ form.postal_code }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mx-auto">
+                                    <div class="form-account-row form-account-submit">
+                                        <div class="parent-btn">
+                                            <button class="dk-btn dk-btn-info">
+                                                ثبت و ارسال
+                                                <i class="fa fa-sign-in"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mini-footer">
+            <nav>
+                <div class="container">
+                    <ul class="menu">
+                        <li>
+                            <a href="#">درباره تاپ کالا</a>
+                        </li>
+                        <li>
+                            <a href="#">فرصت‌های شغلی</a>
+                        </li>
+                        <li>
+                            <a href="#">تماس با ما</a>
+                        </li>
+                        <li>
+                            <a href="#">همکاری با سازمان‌ها</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </nav>
+            <div class="copyright-bar">
+                <div class="container">
+                    <p>
+                        استفاده از مطالب فروشگاه اینترنتی تاپ کالا فقط برای مقاصد غیرتجاری و با ذکر منبع بلامانع است.
+                        کلیه حقوق این سایت متعلق
+                        به شرکت نوآوران فن آوازه (فروشگاه آنلاین تاپ کالا) می‌باشد.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+{% include 'includes/footer_links.html' %}

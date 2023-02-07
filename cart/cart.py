@@ -1,3 +1,6 @@
+from django.shortcuts import get_object_or_404
+
+from home.models import Post
 from product.models import Product
 
 CART_SESSION_ID = 'cart'
@@ -15,7 +18,7 @@ class Cart:
         cart = self.cart.copy()
 
         for item in cart.values():
-            item['product'] = Product.objects.get(id=int(item['id']))
+            item['product'] = get_object_or_404(Product, id=int(item['id']))
             item['total'] = int(item['quantity']) * int(item['product'].get_price_with_discount)
             item['unique_id'] = self.unique_id_generate(item['id'], item['color'])
             yield item
@@ -40,10 +43,15 @@ class Cart:
         return sum(int(item['price']) * int(item['quantity']) for item in self.cart.values())
 
     def get_total_price_with_post(self):
-        return sum(int(item['price']) * int(item['quantity']) for item in self.cart.values()) + 30000
+        post_cost = Post.objects.all().last()
+        return sum(int(item['price']) * int(item['quantity']) for item in self.cart.values()) + post_cost.cost
 
     def get_count_item(self):
         return sum(item['quantity'] for item in self.cart.values())
+
+    def clear(self):
+        del self.session[CART_SESSION_ID]
+        self.save()
 
     def save(self):
         self.session.modified = True

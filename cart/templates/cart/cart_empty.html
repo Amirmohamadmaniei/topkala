@@ -10,6 +10,7 @@
                 <i class="now-ui-icons shopping_basket"></i>
             </div>
             <div class="cart-empty-title">سبد خرید شما خالیست!</div>
+            {% if not request.user.is_authenticated %}
             <div class="parent-btn">
                 <a href="{% url 'account:login' %}" class="dk-btn dk-btn-success">
                     به حساب کاربری خود وارد شوید
@@ -20,6 +21,7 @@
                 <span>کاربر جدید هستید؟</span>
                 <a href="{% url 'account:register' %}">ثبت‌ نام در تاپ کالا</a>
             </div>
+            {% endif %}
         </div>
     </div>
 </main>

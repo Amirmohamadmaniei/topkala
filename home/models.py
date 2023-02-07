@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+
+class Post(models.Model):
+    cost = models.IntegerField(default=30000)
+
+    def __str__(self):
+        return self.cost

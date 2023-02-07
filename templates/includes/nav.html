@@ -42,15 +42,17 @@
             <ul class="navbar-nav default">
                 {% for category in categories %}
                 <li class="sub-menu">
-                    <a href="{% url 'product:list_category' category.slug %}" >{{ category.title }}</a>
+                    <a href="{% url 'product:list_category' category.slug %}">{{ category.title }}</a>
                     <ul>
                         {% for sub_category in category.sub_categories.all %}
                         <li class="sub-menu">
-                            <a href="{% url 'product:list_sub_category' sub_category.category.slug sub_category.slug %}">{{ sub_category.title }}</a>
+                            <a href="{% url 'product:list_sub_category' sub_category.category.slug sub_category.slug %}">{{
+                                sub_category.title }}</a>
                             <ul>
                                 {% for subset in sub_category.subsets.all %}
                                 <li>
-                                    <a href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">{{ subset.title }}</a>
+                                    <a href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">{{
+                                        subset.title }}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -131,7 +133,7 @@
                             <ul class="basket-list">
                                 {% for item in cart %}
                                 <li>
-                                    <a href="#" class="basket-item">
+                                    <a href="{% url 'cart:remove' item.unique_id %}" class="basket-item">
                                         <button class="basket-item-remove"></button>
                                         <div class="basket-item-content">
                                             <div class="basket-item-image">
@@ -153,10 +155,12 @@
                                 </li>
                                 {% endfor %}
                             </ul>
-                            {% if not request.user.is_authenticated %}
+                            {% if cart.get_count_item %}
+                                {% if not request.user.is_authenticated %}
                                 <a href="{% url 'account:login' %}" class="basket-submit">ورود و ثبت سفارش</a>
-                            {% else %}
+                                {% else %}
                                 <a href="#" class="basket-submit">ثبت سفارش</a>
+                                {% endif %}
                             {% endif %}
                         </ul>
                     </div>
@@ -173,11 +177,14 @@
                             {% for sub_category in category.sub_categories.all %}
                             <li class="list-item list-item-has-children">
                                 <i class="now-ui-icons arrows-1_minimal-left"></i>
-                                <a class="main-list-item nav-link" href="{% url 'product:list_sub_category' sub_category.category.slug sub_category.slug %}">{{ sub_category.title }}</a>
+                                <a class="main-list-item nav-link"
+                                   href="{% url 'product:list_sub_category' sub_category.category.slug sub_category.slug %}">
+                                    {{ sub_category.title }}</a>
                                 <ul class="sub-menu nav">
                                     {% for subset in sub_category.subsets.all %}
                                     <li class="list-item">
-                                        <a class="nav-link" href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">{{ subset.title }}</a>
+                                        <a class="nav-link"
+                                           href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">{{ subset.title }}</a>
                                     </li>
                                     {% endfor %}
                                 </ul>

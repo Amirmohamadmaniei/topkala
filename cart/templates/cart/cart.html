@@ -41,6 +41,7 @@
                             {% else %}
                                 <td>{{ item.color }}</td>
                                 <td>{{ item.product.price|separator }} تومان</td>
+                                <td>−</td>
                                 <td>{{ item.quantity }} عدد</td>
                                 <td class="text text-danger">{{ item.total|separator }} تومان</td>
                             {% endif %}
@@ -56,7 +57,7 @@
                     <div class="checkout-summary">
                         <div class="checkout-summary-main">
                             <ul class="checkout-summary-summary">
-                                <li><span>مبلغ کل ({{ cart.get_count_item }} کالا)</span><span>{{ cart.cart_total_price|separator }} تومان</span></li>
+                                <li><span>مبلغ کل ({{ cart.get_count_item }} کالا)</span><span>{{ cart.get_total_price|separator }} تومان</span></li>
                                 <li>
                                     <span>هزینه ارسال</span>
                                     <span>30,000 تومان<span>
@@ -85,7 +86,7 @@
                                 <div class="checkout-summary-price-value">
                                     <span class="checkout-summary-price-value-amount">{{ cart.get_total_price_with_post|separator }}</span>تومان
                                 </div>
-                                <a href="{% url 'order:information' %}" class="selenium-next-step-shipping">
+                                <a href="{% url 'order:create' %}" class="selenium-next-step-shipping">
                                     <div class="parent-btn">
                                         <button class="dk-btn dk-btn-info">
                                             ادامه ثبت سفارش
