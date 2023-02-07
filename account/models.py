@@ -43,3 +43,13 @@ class User(AbstractBaseUser):
         if self.l_name:
             return self.l_name
         return 'نامشخص'
+
+
+class OTP(models.Model):
+    code = models.CharField(max_length=4)
+    phone = models.CharField(max_length=11)
+
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.code} - {self.phone}'

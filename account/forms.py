@@ -1,5 +1,5 @@
 from django import forms
-from .models import User
+from .models import User, OTP
 from django.core.exceptions import ValidationError
 
 
@@ -73,6 +73,9 @@ class ChangePasswordForm(forms.Form):
             raise ValidationError('رمز عبور یکسان نیست')
         return password
 
+
+class OTPForm(forms.Form):
+    code = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-field', 'placeholder': 'کد ارسال شده را وارد کنید'}))
 
 
 

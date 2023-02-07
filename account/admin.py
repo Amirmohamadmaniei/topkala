@@ -1,4 +1,4 @@
-from account.models import User
+from account.models import User, OTP
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
@@ -31,3 +31,4 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.unregister(Group)
 admin.site.register(User, UserAdmin)
+admin.site.register(OTP)
