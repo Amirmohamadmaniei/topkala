@@ -57,7 +57,7 @@
                                             <li class="checkout-contact-item">
                                                 گیرنده:
                                                 <span class="full-name">{{ order.f_name }} {{ order.l_name }}</span>
-                                                <a class="checkout-contact-btn-edit">اصلاح این آدرس</a>
+                                                <a href="{% url 'order:update' order.id %}" class="checkout-contact-btn-edit">اصلاح این آدرس</a>
                                             </li>
                                             <li class="checkout-contact-item">
                                                 <div class="checkout-contact-item checkout-contact-item-mobile">
@@ -78,7 +78,7 @@
                                             <i class="now-ui-icons ui-1_check"></i>
                                         </div>
                                     </div>
-                                    <a class="checkout-contact-location">تغییر آدرس ارسال</a>
+                                    <a href="{% url 'order:update' order.id %}" class="checkout-contact-location">تغییر آدرس ارسال</a>
                                 </div>
                             </div>
                             <form method="post" id="shipping-data-form">

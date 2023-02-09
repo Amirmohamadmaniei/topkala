@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load separator %}
+
 
 {% block content %}
 <!-- main -->
@@ -8,27 +10,57 @@
             <div class="profile-page col-xl-9 col-lg-8 col-md-12 order-2">
                 <div class="row">
                     <div class="col-lg-12">
+
+
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for msg in messages %}
+                            <li class="{{ msg.tags }}">{{ msg }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+
                         <div class="col-12">
                             <h1 class="title-tab-content">لیست علاقمندی ها</h1>
                         </div>
                         <div class="content-section default">
                             <div class="row">
 
-                                {% for favorite in product_favorites %}
+                                {% for favorite in object_list %}
                                 <div class="col-md-6 col-sm-12">
                                     <div class="profile-recent-fav-row">
                                         <a href="{{ favorite.product.get_absolute_url }}"
                                            class="profile-recent-fav-col profile-recent-fav-col-thumb">
-                                            <img src="{{ favorite.product.images.first.image.url }}"></a>
+                                            <img src="{{ favorite.product.images.first.image.url }}">
+                                        </a>
                                         <div class="profile-recent-fav-col profile-recent-fav-col-title">
                                             <a href="{{ favorite.product.get_absolute_url }}">
                                                 <h4 class="profile-recent-fav-name">
                                                     {{ favorite.product.title }}
                                                 </h4>
                                             </a>
-                                            <div class="profile-recent-fav-price">
-                                               {{ favorite.product.get_price_with_discount }} تومان
-                                            </div>
+                                            {% if favorite.product.is_available %}
+                                                {% if favorite.product.discount %}
+                                                    <div class="text text-muted">
+                                                        <del>{{ favorite.product.price|separator }} تومان</del>
+                                                    </div>
+                                                    <div>
+                                                        <span>{{ favorite.product.discount }} %</span>
+                                                    </div>
+                                                    <div class="profile-recent-fav-price">
+                                                       {{ favorite.product.get_price_with_discount|separator }} تومان
+                                                    </div>
+                                                {% else %}
+                                                     <div class="profile-recent-fav-price">
+                                                       {{ favorite.product.get_price_with_discount|separator }} تومان
+                                                    </div>
+                                                {% endif %}
+                                            {% else %}
+                                                <div class="price-value-wrapper text-danger">
+                                                    <span class="price-currency">ناموجود</span>
+                                                </div>
+                                            {% endif %}
                                         </div>
                                         <div class="profile-recent-fav-col profile-recent-fav-col-actions">
                                             <a href="{% url 'profile:remove_favorite' favorite.product.id %}">
@@ -38,7 +70,9 @@
                                             </a>
                                         </div>
                                         <div class="col-12 text-left mb-3">
-                                            <a href="{{ favorite.product.get_absolute_url }}" class="view-product">مشاهده محصول</a>
+                                            <a href="{{ favorite.product.get_absolute_url }}" class="view-product">
+                                                مشاهده محصول
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

@@ -6,6 +6,7 @@ from cart.cart import Cart
 from order.forms import CheckoutForm, CouponForm
 from order.models import OrderItem, Order, Coupon
 from product.models import Color
+from django.utils import timezone
 
 
 class OrderCreateView(LoginRequiredMixin, View):
@@ -72,7 +73,7 @@ class OrderSelectPayment(LoginRequiredMixin, View):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            now = datetime.now()
+            now = timezone.now()
             code = form.cleaned_data['code']
             try:
                 coupon = Coupon.objects.get(code__exact=code, valid_from__lte=now, valid_to__gte=now, active=True)
@@ -83,3 +84,20 @@ class OrderSelectPayment(LoginRequiredMixin, View):
 
         return render(request, self.template_name, {'order': self.order, 'items': self.items,
                                                     'form_coupon': form})
+
+
+class UpdateOrderView(View):
+    form_class = CheckoutForm
+
+    def get(self, request, order_id):
+        order = get_object_or_404(Order, id=order_id)
+        form = self.form_class(instance=order)
+        return render(request, 'order/checkout.html', {'form': form})
+
+    def post(self, request, order_id):
+        order = get_object_or_404(Order, id=order_id)
+        form = self.form_class(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('order:detail', order_id)
+        return render(request, 'order/checkout.html', {'form': self.form_class})

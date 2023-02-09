@@ -12,11 +12,11 @@
                     <div class="col-12">
 
                         {% if messages %}
-                        {% for msg in messages %}
-                            <div class="{{ msg.tags }} col-sm-12 col-md-6" role="alert">
-                                {{ msg }}
-                            </div>
-                        {% endfor %}
+                        <ul class="messages">
+                            {% for msg in messages %}
+                            <li class="{{ msg.tags }}">{{ msg }}</li>
+                            {% endfor %}
+                        </ul>
                         {% endif %}
 
                         <div class="col-12">

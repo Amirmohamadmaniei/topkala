@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load separator %}
+
+{% block content %}
+
+<!-- main -->
+<main class="profile-user-page default">
+    <div class="container">
+        <div class="row">
+            <div class="profile-page col-xl-9 col-lg-8 col-md-12 order-2">
+                <div class="row">
+                    <div class="col-lg-12">
+
+
+                        {% if messages %}
+                        <ul class="messages">
+                            {% for msg in messages %}
+                            <li class="{{ msg.tags }}">{{ msg }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+
+                        <div class="col-12">
+                            <h1 class="title-tab-content">همه سفارش ها</h1>
+                        </div>
+                        <div class="content-section default">
+                            <div class="row">
+
+                                {% for order in orders %}
+                                    {% for item in order.items.all %}
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="profile-recent-fav-row">
+                                                <a href="{{ item.product.get_absolute_url }}" class="profile-recent-fav-col profile-recent-fav-col-thumb">
+                                                    <img src="{{ item.product.images.first.image.url }}">
+                                                </a>
+                                                <div class="profile-recent-fav-col profile-recent-fav-col-title">
+                                                    <a href="{{ item.product.get_absolute_url }}">
+                                                        <h4 class="profile-recent-fav-name">
+                                                           {{ item.product.title }}
+                                                        </h4>
+                                                    </a>
+                                                    {% if item.product.is_available %}
+                                                        {% if item.product.discount %}
+                                                            <div class="text text-muted">
+                                                                <del>{{ item.product.price|separator }} تومان</del>
+                                                            </div>
+                                                            <div>
+                                                                <span>{{ item.product.discount }} %</span>
+                                                            </div>
+                                                            <div class="profile-recent-fav-price">
+                                                               {{ item.product.get_price_with_discount|separator }} تومان
+                                                            </div>
+                                                        {% else %}
+                                                             <div class="profile-recent-fav-price">
+                                                               {{ item.product.get_price_with_discount|separator }} تومان
+                                                            </div>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <div class="price-value-wrapper text-danger">
+                                                            <span class="price-currency">ناموجود</span>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="col-12 text-left mb-3">
+                                                    <a href="{{ item.product.get_absolute_url }}" class="view-product">مشاهده محصول</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                        <div class="col-md-6 col-sm-12">
+                                            بدون سفارش
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {% include 'profiles/includes/profile_sidebar.html' %}
+
+
+        </div>
+    </div>
+</main>
+<!-- main -->
+
+
+{% endblock %}

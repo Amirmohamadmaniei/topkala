@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views import View
+
+from product.mixins import SortMixin
 from product.models import Product
 
 
@@ -15,3 +17,11 @@ class HomeView(View):
         return render(request, 'home/home.html',
                       {'products_1': products_1, 'products_2': products_2, 'products_3': products_3,
                        'products_4': products_4, 'products_5': products_5, 'products_special': products_special})
+
+
+class AmazingView(SortMixin, View):
+    def get(self, request):
+        object_list = Product.objects.filter(is_available=True, discount__gte=40).order_by(self.sort)
+
+        count_object = object_list.count()
+        return render(request, 'home/amazing.html', {'object_list': object_list, 'count_object': count_object})

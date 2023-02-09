@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-
 from comment.forms import CommentForm, QuestionForm
 from comment.models import Comment, Question
 from profiles.models import Favorite
@@ -46,8 +45,9 @@ class ProductListCategoryView(SortMixin, View):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
-        return render(request, 'product/product_list.html', {'object_list': page_obj,
-                                                             'sort': self.sort})
+        count_object = object_list.count()
+
+        return render(request, 'product/product_list.html', {'object_list': page_obj, 'count_object': count_object})
 
 
 class ProductListSubCategoryView(SortMixin, View):
@@ -60,7 +60,9 @@ class ProductListSubCategoryView(SortMixin, View):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
-        return render(request, 'product/product_list.html', {'object_list': page_obj})
+        count_object = object_list.count()
+
+        return render(request, 'product/product_list.html', {'object_list': page_obj, 'count_object': count_object})
 
 
 class ProductListSubsetView(SortMixin, View):
@@ -76,4 +78,6 @@ class ProductListSubsetView(SortMixin, View):
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
-        return render(request, 'product/product_list.html', {'object_list': page_obj})
+        count_object = object_list.count()
+
+        return render(request, 'product/product_list.html', {'object_list': page_obj, 'count_object': count_object})

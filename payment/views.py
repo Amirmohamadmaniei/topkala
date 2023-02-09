@@ -5,7 +5,6 @@ import json
 from TopKala.settings import MERCHANT, CallbackURL, ZP_API_REQUEST, ZP_API_STARTPAY, ZP_API_VERIFY
 from django.views import View
 from django.contrib import messages
-
 from order.models import Order
 
 
@@ -61,6 +60,10 @@ class VerifyView(View):
 
                     order.is_paid = True
                     ref_id = str(req.json()['data']['ref_id'])
+
+                    for product in order.products.all():
+                        product.sold += 1
+
                     messages.success(request, 'خرید با موفقیت انجام شد', extra_tags='alert alert-success')
                     return render(request, 'payment/shopping_complete.html', {'ref_id': ref_id, 'order': order,
                                                                               'message': 'خرید با موفقیت انجام شد'})

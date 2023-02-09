@@ -2,13 +2,19 @@
 {% load static %}
 {% load separator %}
 
-
 {% block content %}
+
 <!-- main -->
-<main class="search-page default">
+<main class="search-page amazing-search default">
     <div class="container">
         <div class="row">
+            <div class="col-12">
+                <div class="header-amazing-search"></div>
+            </div>
             <aside class="sidebar-page col-12 col-sm-12 col-md-4 col-lg-3 order-1">
+                <div class="sidebar-title-amazing">
+                    <img src="{% static 'img/svg/9284f8d1.svg' %}" alt="">
+                </div>
                 <div class="box">
                     <div class="box-header">جستجو در نتایج:</div>
                     <div class="box-content">
@@ -19,7 +25,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div class="box">
                     <div class="box-header">
@@ -68,20 +73,8 @@
                 </div>
 
 
-<!--                <div class="box">-->
-<!--                    <div class="box-content">-->
-<!--                        <form method="get">-->
-<!--&lt;!&ndash;                            <input type="checkbox" name="available" class="bootstrap-switch" />&ndash;&gt;-->
-<!--                            {{ form.available }}-->
-<!--                            <input class="btn btn-dark" style="position: absolute; left:30px;" type="submit" value="اعمال کردن">-->
-<!--                        </form>-->
-<!--                        <label>فقط کالاهای موجود</label>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-
             </aside>
-            <div class="col-12 col-sm-12 col-md-8 col-lg-9 order-2">
+            <div class="amazing-content col-12 col-sm-12 col-md-8 col-lg-9 order-2">
                 <div class="breadcrumb-section default">
                     <ul class="breadcrumb-list">
                         <li>
@@ -119,6 +112,7 @@
                                    aria-expanded="false">گران‌ترین</a>
                             </li>
 
+
                         </ul>
                     </div>
                     <div class="tab-content default text-center">
@@ -150,26 +144,17 @@
                                                     <div class="price">
                                                         <div class="price-value">
 
-                                                            {% if object.is_available %}
-                                                                {% if object.discount %}
-                                                                        <div class="price-value-wrapper">
-                                                                            <small>
-                                                                                <del> {{ object.price|separator }} <span
-                                                                                        class="price-currency">تومان</span></del>
-                                                                            </small>
-                                                                        </div>
-                                                                {% else %}
-                                                                        <div class="price-value-wrapper text-danger">
-                                                                            {{ object.get_price_with_discount|separator }} <span
-                                                                                class="price-currency">تومان</span>
-                                                                        </div>
-                                                                {% endif %}
-                                                            {% else %}
-                                                                    <div class="price-value-wrapper text-danger">
-                                                                        <span class="price-currency">ناموجود</span>
-                                                                    </div>
-                                                            {% endif %}
+                                                            <div class="price-value-wrapper">
+                                                                <small>
+                                                                    <del> {{ object.price|separator }} <span
+                                                                            class="price-currency">تومان</span></del>
+                                                                </small>
+                                                            </div>
 
+                                                            <div class="price-value-wrapper text-danger">
+                                                                {{ object.get_price_with_discount|separator }} <span
+                                                                    class="price-currency">تومان</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -178,11 +163,11 @@
                                         </div>
                                     </li>
                                     {% endfor %}
+
                                 </ul>
                             </div>
                         </div>
                     </div>
-
                     <div class="pager default text-center">
                         <ul class="pager-items">
 
@@ -199,9 +184,11 @@
                             {% for num in object_list.paginator.page_range %}
                             <li>
                                 {% if num == object_list.number %}
-                                <a href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pager-item is-active">{{ num }}</a>
+                                <a href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                                   class="pager-item is-active">{{ num }}</a>
                                 {% else %}
-                                <a href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="pager-item">{{ num }}</a>
+                                <a href="?page={{ num }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                                   class="pager-item">{{ num }}</a>
 
                                 {% endif %}
                             </li>
@@ -216,15 +203,14 @@
                             {% endif %}
                             {% endif %}
 
+
                         </ul>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
-    </div>
 </main>
 <!-- main -->
+
 {% endblock %}

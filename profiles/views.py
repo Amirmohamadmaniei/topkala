@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views import View
 from account.models import User
+from order.models import Order
 from product.models import Product
 from profiles.forms import EditProfileForm
 from profiles.models import Favorite
@@ -47,8 +48,8 @@ class FavoriteDetailView(LoginRequiredMixin, View):
     login_url = 'account:login'
 
     def get(self, request):
-        product_favorites = Favorite.objects.filter(user=request.user)
-        return render(request, 'profiles/profile_favorites.html', {'product_favorites': product_favorites})
+        object_list = Favorite.objects.filter(user=request.user)
+        return render(request, 'profiles/profile_favorites.html', {'object_list': object_list})
 
 
 class FavoriteAddRemoveView(LoginRequiredMixin, View):
@@ -69,4 +70,14 @@ class FavoriteRemoveView(LoginRequiredMixin, View):
     def get(self, request, product_id):
         product = get_object_or_404(Product, pk=product_id)
         Favorite.objects.get(user=request.user, product=product).delete()
+        messages.success(request, 'محصول با موفقیت از مورد علاقه ها حذف شد', extra_tags='alert alert-success')
         return redirect('profile:favorites')
+
+
+class OrderDetailView(LoginRequiredMixin, View):
+    login_url = 'account:login'
+
+    def get(self, request):
+        orders = Order.objects.filter(user=request.user, is_paid=True)
+
+        return render(request, 'profiles/profile_orders.html', {'orders': orders})

@@ -21,7 +21,7 @@ class Product(models.Model):
     color = models.ManyToManyField('Color')
     is_available = models.BooleanField(default=True)
 
-    view = models.ManyToManyField('IP')
+    view = models.ManyToManyField('IP', blank=True)
     sold = models.IntegerField(default=0)
 
     slug = models.SlugField(allow_unicode=True, blank=True)
