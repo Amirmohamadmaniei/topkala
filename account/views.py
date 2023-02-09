@@ -96,12 +96,11 @@ class ConfirmOTPView(NotLoginRequiredMixin, View):
 class SendOTP(NotLoginRequiredMixin, View):
     def get(self, request):
         phone = request.session['phone']
-        OTP.objects.filter(phone=phone).delete()
         create_send_otp(phone)
         return redirect('account:confirm')
 
 
-class WelcomeView(NotLoginRequiredMixin, View):
+class WelcomeView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'account/welcome.html')
 

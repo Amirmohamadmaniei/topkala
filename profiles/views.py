@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views import View
 from account.models import User
@@ -26,7 +26,7 @@ class ProfileEditView(View):
     template_name = 'profiles/profile_edit.html'
 
     def setup(self, request, *args, **kwargs):
-        self.user = User.objects.get(pk=request.user.pk)
+        self.user = get_object_or_404(User, pk=request.user.pk)
         super().setup(request, *args, **kwargs)
 
     def get(self, request):
@@ -55,7 +55,7 @@ class FavoriteAddRemoveView(LoginRequiredMixin, View):
     login_url = 'account:login'
 
     def get(self, request, product_id):
-        product = Product.objects.get(pk=product_id)
+        product = get_object_or_404(Product, pk=product_id)
         try:
             Favorite.objects.get(user=request.user, product=product).delete()
         except:
@@ -67,6 +67,6 @@ class FavoriteRemoveView(LoginRequiredMixin, View):
     login_url = 'account:login'
 
     def get(self, request, product_id):
-        product = Product.objects.get(pk=product_id)
+        product = get_object_or_404(Product, pk=product_id)
         Favorite.objects.get(user=request.user, product=product).delete()
         return redirect('profile:favorites')

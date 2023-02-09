@@ -4,10 +4,23 @@
 
 
 {% block content %}
+
+
 <!-- main -->
 <main class="cart-page default">
     <div class="container">
         <div class="row">
+
+
+            {% if messages %}
+                <ul class="messages">
+                    {% for msg in messages %}
+                    <li class="{{ msg.tags }}">{{ msg }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+            
             <div class="cart-page-content col-xl-9 col-lg-8 col-md-12 order-1">
                 <div class="cart-page-title">
                     <h1>سبد خرید</h1>
@@ -19,7 +32,8 @@
                         {% for item in cart %}
                         <tr class="checkout-item">
                             <td>
-                                <img style="height: auto; width: auto; max-height: 120px; min-height: 30px; min-width: 70px;" height="120" src="{{ item.product.images.first.image.url }}" alt="">
+                                <img style="height: auto; width: auto; max-height: 120px; min-height: 30px; min-width: 70px;"
+                                     height="120" src="{{ item.product.images.first.image.url }}" alt="">
                                 <a href="{% url 'cart:remove' item.unique_id %}" class="checkout-btn-remove"></a>
                             </td>
 
@@ -33,17 +47,17 @@
 
                             </td>
                             {% if item.product.discount %}
-                                <td>{{ item.color }}</td>
-                                <td>{{ item.product.get_price_with_discount|separator }} تومان</td>
-                                <td>%{{ item.product.discount }}</td>
-                                <td>{{ item.quantity }} عدد</td>
-                                <td class="text text-danger">{{ item.total|separator }} تومان</td>
+                            <td>{{ item.color }}</td>
+                            <td>{{ item.product.get_price_with_discount|separator }} تومان</td>
+                            <td>%{{ item.product.discount }}</td>
+                            <td>{{ item.quantity }} عدد</td>
+                            <td class="text text-danger">{{ item.total|separator }} تومان</td>
                             {% else %}
-                                <td>{{ item.color }}</td>
-                                <td>{{ item.product.price|separator }} تومان</td>
-                                <td>−</td>
-                                <td>{{ item.quantity }} عدد</td>
-                                <td class="text text-danger">{{ item.total|separator }} تومان</td>
+                            <td>{{ item.color }}</td>
+                            <td>{{ item.product.price|separator }} تومان</td>
+                            <td>−</td>
+                            <td>{{ item.quantity }} عدد</td>
+                            <td class="text text-danger">{{ item.total|separator }} تومان</td>
                             {% endif %}
                         </tr>
                         {% endfor %}
@@ -57,7 +71,8 @@
                     <div class="checkout-summary">
                         <div class="checkout-summary-main">
                             <ul class="checkout-summary-summary">
-                                <li><span>مبلغ کل ({{ cart.get_count_item }} کالا)</span><span>{{ cart.get_total_price|separator }} تومان</span></li>
+                                <li><span>مبلغ کل ({{ cart.get_count_item }} کالا)</span><span>{{ cart.get_total_price|separator }} تومان</span>
+                                </li>
                                 <li>
                                     <span>هزینه ارسال</span>
                                     <span>30,000 تومان<span>

@@ -1,0 +1,111 @@
+{% load static %}
+{% load include 'includes/header_links.html' %}
+
+
+
+{% if messages %}
+<ul class="messages">
+    {% for msg in messages %}
+    <li class="{{ msg.tags }}">{{ msg }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+
+<body>
+
+<div class="wrapper default shopping-page">
+    <!-- header-shopping -->
+    <header class="header-shopping default">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center pt-2">
+                    <div class="header-shopping-logo default">
+                        <a href="#">
+                            <img src="{% static 'img/logo.png' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <ul class="checkout-steps">
+                        <li>
+                            <a href="shopping.html" class="active">
+                                <span>اطلاعات ارسال</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="shopping-payment.html" class="active">
+                                <span>پرداخت</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="shopping-complete-buy.html" class="active">
+                                <span>اتمام خرید و ارسال</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header-shopping -->
+
+    <!-- main-shopping -->
+    <main class="cart-page default">
+        <div class="container">
+            <div class="row">
+                <div class="cart-page-content col-12 order-1">
+                    <section class="page-content default">
+                        <div class="warning-checkout text-center default">
+                            <div class="icon-warning">
+                            </div>
+                            <h1>سفارش <a href="#"></a>ثبت شد اما پرداخت ناموفق بود.</h1>
+                            <p class="text-warning">برای جلوگیری از لغو سیستمی سفارش،تا 24 ساعت آینده پرداخت را انجام
+                                دهید.</p>
+                            <p>چنانچه طی این فرایند مبلغی از حساب شما کسر شده است،طی 72 ساعت آینده به حساب شما باز خواهد
+                                گشت.</p>
+                        </div>
+                        <div class="order-info default">
+                            <p>سفارش شما با موفقیت در سیستم ثبت شد و هم اکنون <span
+                                    class="badge badge-warning">در انتظار پرداخت</span> است.جزئیات این سفارش را می
+                                توانید
+                                با کلیک بر روی دکمه <a href="#" class="btn-link-border">پیگیری سفارش</a>مشاهده نمایید.
+                            </p>
+                            <button type="button" class="btn-primary">
+                                پیگیری سفارش
+                            </button>
+                            <div class="table-responsive default mt-3 mb-3">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">نام تحویل گیرنده : {{ order.l_name }} {{ order.f_name }}</th>
+                                        <th scope="col">شماره تماس : {{ order.phone }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">تعداد مرسوله : {{ order.get_count_item }}</th>
+                                        <td>مبلغ کل : {{ order.get_total_price }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">وضعیت پرداخت : پرداخت آنلاین(ناموفق)</th>
+                                        <td>وضعیت سفارش: در انتظار پرداخت</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">آدرس : {{ order.address }}</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- main-shopping -->
+
+
+
+{% include 'includes/footer_links.html' %}

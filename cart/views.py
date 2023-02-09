@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from .cart import Cart
 from product.models import Product
@@ -24,19 +25,21 @@ class CartDetailEmptyView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
+        cart = Cart(request)
         return render(request, 'cart/cart_empty.html')
 
 
 class CartAdd(View):
     def post(self, request, pk):
         form = AddCartForm(request.POST)
-        product = Product.objects.get(pk=pk)
+        product = get_object_or_404(Product, pk=pk, is_available=True)
         if form.is_valid():
             cd = form.cleaned_data
             quantity = cd['quantity']
             color = request.POST.get('color')
             cart = Cart(request)
             cart.add(product, quantity, color)
+            messages.success(request, 'محصول با موفقیت به سبد خرید اضافه شد', extra_tags='alert alert-success')
         return redirect('product:detail', pk, product.slug)
 
 
@@ -44,4 +47,5 @@ class CartRemove(View):
     def get(self, request, unique_id):
         cart = Cart(request)
         cart.remove(unique_id)
+        messages.success(request, 'با موفقیت از سبد خرید حذف شد', extra_tags='alert alert-success')
         return redirect('cart:cart')

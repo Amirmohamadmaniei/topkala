@@ -5,4 +5,4 @@ class Post(models.Model):
     cost = models.IntegerField(default=30000)
 
     def __str__(self):
-        return self.cost
+        return str(self.cost)

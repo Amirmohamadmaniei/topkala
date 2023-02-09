@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load separator %}
+{% load jalali_tags %}
 
 {% block content %}
 
@@ -9,6 +10,17 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+
+
+                {% if messages %}
+                <ul class="messages">
+                    {% for msg in messages %}
+                    <li class="{{ msg.tags }}">{{ msg }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+
                 <nav>
                     <ul class="breadcrumb">
                         <li>
@@ -148,11 +160,13 @@
                                 <ul>
                                     <li>
                                         <span>برند</span> :
-                                        <span class="product-brand-title">{{ object.brand }}</span>
+                                        <a href="{% url 'product:list_subset' object.subset.category.category.slug object.subset.category.slug object.subset.slug %}"
+                                           class="product-brand-title">{{ object.brand }}</a>
                                     </li>
                                     <li>
                                         <span>دسته‌بندی</span> :
-                                        <a href="#" class="btn-link-border">
+                                        <a href="{% url 'product:list_sub_category' object.subset.category.category.slug object.subset.category.slug %}"
+                                           class="btn-link-border">
                                             {{ object.sub_category }}
                                         </a>
                                     </li>
@@ -186,29 +200,39 @@
                                 </div>
 
 
+                                {% if object.is_available %}
                                 {% if object.discount %}
-                                    <del class="text-muted"> {{ object.price|separator }} تومان</del>
-                                    <div class="price-product defualt">
-                                        <div class="price-value">
-                                            <span> {{ object.get_price_with_discount|separator }} </span>
-                                            <span class="price-currency">تومان</span>
-                                        </div>
-
-                                        <div class="price-discount" data-title="تخفیف">
-                                            <span>{{ object.discount }}</span>
-                                            <span>%</span>
-                                        </div>
+                                <del class="text-muted"> {{ object.price|separator }} تومان</del>
+                                <div class="price-product defualt">
+                                    <div class="price-value">
+                                        <span> {{ object.get_price_with_discount|separator }} </span>
+                                        <span class="price-currency">تومان</span>
                                     </div>
+
+                                    <div class="price-discount" data-title="تخفیف">
+                                        <span>{{ object.discount }}</span>
+                                        <span>%</span>
+                                    </div>
+                                </div>
                                 {% else %}
-                                        <div class="price-product defualt">
-                                            <div class="price-value">
-                                                <span> {{ object.get_price_with_discount|separator }} </span>
-                                                <span class="price-currency">تومان</span>
-                                            </div>
-                                        </div>
+                                <div class="price-product defualt">
+                                    <div class="price-value">
+                                        <span> {{ object.get_price_with_discount|separator }} </span>
+                                        <span class="price-currency">تومان</span>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% else %}
+                                <div class="price-product defualt">
+                                    <div class="price-value">
+                                        <span class="text-muted"> ناموجود </span>
+                                    </div>
+                                </div>
+
                                 {% endif %}
 
 
+                                {% if object.is_available %}
                                 <div class="product-add default">
                                     <div class="parent-btn">
                                         <button type="submit" class="dk-btn dk-btn-info">
@@ -222,6 +246,18 @@
                                 <div class="product-add default">
                                     {{ form.quantity }}
                                 </div>
+
+                                {% else %}
+                                <div class="product-add default">
+                                    <div class="parent-btn">
+                                        <span type="submit" class="dk-btn dk-btn-dark">
+                                            افزودن به سبد خرید
+                                            <i class="now-ui-icons shopping_cart-simple"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                {% endif %}
+
 
                             </form>
                         </div>
@@ -316,7 +352,7 @@
                                                          aria-labelledby="heading{{ forloop.counter }}"
                                                          data-parent="#accordionExample">
                                                         <div class="card-body">
-                                                            <p> {{ object.description }} </p>
+                                                            <p> {{ des.description }} </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -354,178 +390,110 @@
                                         <article>
                                             <h2 class="param-title">
                                                 نظرات کاربران
-                                                <span>۱۲۳ نظر</span>
+                                                <span>{{ comments.count }} نظر</span>
                                             </h2>
                                             <div class="comments-area default">
                                                 <ol class="comment-list">
-                                                    <!-- #comment-## -->
+
+                                                    {% for comment in comments %}
                                                     <li>
                                                         <div class="comment-body">
                                                             <div class="comment-author">
                                                                 <img alt="" src="{% static 'img/default-avatar.png' %}"
-                                                                     class="avatar"><cite class="fn">حسن</cite>
+                                                                     class="avatar"><cite class="fn">
+                                                                {{ comment.full_name }}</cite>
                                                                 <span class="says">گفت:</span></div>
 
-                                                            <div class="commentmetadata"><a href="#">
-                                                                اسفند ۲۰, ۱۳۹۶ در ۹:۴۱ ب.ظ</a></div>
-
-                                                            <p>لورم ایپسوم متن ساختگی</p>
-
-                                                            <div class="reply"><a class="comment-reply-link" href="#">پاسخ</a>
+                                                            <div class="commentmetadata">
+                                                                <span class="text text-primary"> {{ comment.created|to_jalali:'%H:%M -- %Y/%m/%d' }} </span>
                                                             </div>
+
+                                                            <p>{{ comment.body }}</p>
+
                                                         </div>
                                                     </li>
-                                                    <!-- #comment-## -->
-                                                    <li>
-                                                        <div class="comment-body">
-                                                            <div class="comment-author">
-                                                                <img alt="" src="{% static 'img/default-avatar.png' %}"
-                                                                     class="avatar"><cite class="fn">رضا</cite>
-                                                                <span class="says">گفت:</span></div>
-
-                                                            <div class="commentmetadata"><a href="#">
-                                                                اسفند ۲۰, ۱۳۹۶ در ۹:۴۲ ب.ظ</a></div>
-
-                                                            <p>
-                                                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
-                                                                صنعت چاپ و با استفاده از طراحان گرافیک است.
-                                                            </p>
-
-                                                            <div class="reply"><a class="comment-reply-link" href="#">پاسخ</a>
-                                                            </div>
-                                                        </div>
-                                                        <ol class="children">
-                                                            <li>
-                                                                <div class="comment-body">
-                                                                    <div class="comment-author">
-                                                                        <img alt=""
-                                                                             src="{% static 'img/default-avatar.png' %}"
-                                                                             class="avatar"><cite class="fn">بهرامی
-                                                                        راد</cite> <span class="says">گفت:</span></div>
-
-                                                                    <div class="commentmetadata"><a href="#">
-                                                                        اسفند ۲۰, ۱۳۹۶ در ۹:۴۷ ب.ظ</a>
-                                                                    </div>
-
-                                                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی
-                                                                        نامفهوم از صنعت چاپ و با استفاده از
-                                                                        طراحان گرافیک است.
-                                                                        چاپگرها و متون بلکه روزنامه و مجله در
-                                                                        ستون و سطرآنچنان که لازم است و برای
-                                                                        شرایط فعلی تکنولوژی
-                                                                        مورد نیاز و کاربردهای متنوع با هدف بهبود
-                                                                        ابزارهای کاربردی می باشد.</p>
-
-                                                                    <div class="reply"><a class="comment-reply-link"
-                                                                                          href="#">پاسخ</a></div>
-                                                                </div>
-                                                                <ol class="children">
-                                                                    <li>
-                                                                        <div class="comment-body">
-                                                                            <div class="comment-author">
-                                                                                <img alt=""
-                                                                                     src="{% static 'img/default-avatar.png' %}"
-                                                                                     class="avatar"> <cite class="fn">محمد</cite>
-                                                                                <span class="says">گفت:</span>
-                                                                            </div>
-
-                                                                            <div class="commentmetadata">
-                                                                                <a href="#">
-                                                                                    خرداد ۳۰, ۱۳۹۷ در ۸:۵۳
-                                                                                    ق.ظ</a></div>
-
-                                                                            <p>عالیه</p>
-
-                                                                            <div class="reply"><a
-                                                                                    class="comment-reply-link" href="#">پاسخ</a>
-                                                                            </div>
-                                                                        </div>
-                                                                        <ol class="children">
-                                                                            <li>
-                                                                                <div class="comment-body">
-                                                                                    <div class="comment-author">
-                                                                                        <img alt=""
-                                                                                             src="{% static 'img/default-avatar.png' %}"
-                                                                                             class="avatar">
-                                                                                        <cite class="fn">اشکان</cite>
-                                                                                        <span class="says">گفت:</span>
-                                                                                    </div>
-
-                                                                                    <div class="commentmetadata">
-                                                                                        <a href="#">
-                                                                                            خرداد ۳۰, ۱۳۹۷ در
-                                                                                            ۸:۵۳ ق.ظ</a></div>
-
-                                                                                    <p>لورم ایپسوم متن ساختگی با
-                                                                                        تولید سادگی نامفهوم از
-                                                                                        صنعت چاپ و با استفاده از
-                                                                                        طراحان
-                                                                                        گرافیک است. چاپگرها و
-                                                                                        متون بلکه روزنامه و مجله
-                                                                                        در ستون و سطرآنچنان که
-                                                                                        لازم است و
-                                                                                        برای شرایط فعلی تکنولوژی
-                                                                                        مورد نیاز و کاربردهای
-                                                                                        متنوع با هدف بهبود
-                                                                                        ابزارهای
-                                                                                        کاربردی می باشد.</p>
-
-                                                                                    <div class="reply"><a
-                                                                                            class="comment-reply-link"
-                                                                                            href="#">پاسخ</a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                            <!-- #comment-## -->
-                                                                        </ol>
-                                                                        <!-- .children -->
-                                                                    </li>
-                                                                    <!-- #comment-## -->
-                                                                </ol>
-                                                                <!-- .children -->
-                                                            </li>
-                                                            <!-- #comment-## -->
-                                                        </ol>
-                                                        <!-- .children -->
-                                                    </li>
-                                                    <!-- #comment-## -->
-                                                    <li>
-                                                        <div class="comment-body">
-                                                            <div class="comment-author">
-                                                                <img alt="" src="{% static 'img/default-avatar.png' %}"
-                                                                     class="avatar"> <cite class="fn">جلال</cite>
-                                                                <span class="says">گفت:</span></div>
-
-                                                            <div class="commentmetadata"><a href="#">
-                                                                اسفند ۲۱, ۱۳۹۶ در ۱:۱۰ ب.ظ</a></div>
-
-                                                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از
-                                                                صنعت چاپ و با استفاده از طراحان گرافیک است.
-                                                                چاپگرها و
-                                                                متون بلکه روزنامه و مجله در ستون و سطرآنچنان که
-                                                                لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و
-                                                                کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
-                                                                باشد.</p>
-
-                                                            <div class="reply"><a class="comment-reply-link" href="">پاسخ</a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <!-- #comment-## -->
+                                                    {% endfor %}
                                                 </ol>
                                             </div>
+                                            <article>
+                                                <h2 class="param-title">
+                                                    افزودن نظر
+                                                    <span>نظر خود را در مورد محصول مطرح نمایید</span>
+                                                </h2>
+                                                <form method="post" action="{% url 'comment:add_comment' object.id %}"
+                                                      class="comment">
+                                                    {% csrf_token %}
+                                                    {{ form_comment.full_name }}
+                                                    <br>
+                                                    {{ form_comment.body }}
+                                                    <button class="btn btn-default">ارسال نظر</button>
+                                                </form>
+                                            </article>
                                         </article>
                                     </div>
                                     <div class="tab-pane form-comment" id="questions" role="tabpanel"
                                          aria-expanded="false">
+                                        <div class="comments-area default">
+                                            <ol class="comment-list">
+
+                                                {% for question in questions %}
+                                                <li>
+                                                    <div class="comment-body">
+                                                        <div class="comment-author">
+                                                            <img alt="" src="{% static 'img/default-avatar.png' %}"
+                                                                 class="avatar"><cite class="fn">
+                                                            {{ question.full_name }}</cite>
+                                                            <span class="says">گفت:</span></div>
+                                                        <div class="commentmetadata">
+                                                            <span class="text text-primary"> {{ question.created|to_jalali:'%H:%M -- %Y/%m/%d' }} </span>
+                                                        </div>
+                                                        <p>{{ question.body }}</p>
+
+                                                        <div class="reply">
+                                                            <a class="comment-reply-link"
+                                                               onclick="set_parent({{ question.id }})">پاسخ</a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                {% for answer in question.answers.all %}
+                                                <ol class="children">
+                                                    <li>
+                                                        <div class="comment-body">
+                                                            <div class="comment-author">
+                                                                <img alt="" src="{% static 'img/default-avatar.png' %}"
+                                                                     class="avatar">
+                                                                <cite class="fn">{{ answer.full_name }}</cite>
+                                                                <span class="says">گفت:</span></div>
+
+                                                            <div class="commentmetadata">
+                                                                <span class="text text-primary"> {{ answer.created|to_jalali:'%H:%M -- %Y/%m/%d' }} </span>
+                                                            </div>
+
+                                                            <p>{{ answer.body }}</p>
+
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                                {% endfor %}
+                                                {% endfor %}
+                                            </ol>
+                                        </div>
+
+
                                         <article>
                                             <h2 class="param-title">
-                                                افزودن نظر
-                                                <span>نظر خود را در مورد محصول مطرح نمایید</span>
+                                                افزودن پرسش
+                                                <span>پرسش خود را در مورد محصول مطرح نمایید</span>
                                             </h2>
-                                            <form action="" class="comment">
-                                                <textarea class="form-control" placeholder="نظر" rows="5"></textarea>
-                                                <button class="btn btn-default">ارسال نظر</button>
+                                            <form method="post" action="{% url 'comment:add_question' object.id %}"
+                                                  class="comment">
+                                                {% csrf_token %}
+                                                {{ form_question.full_name }}
+                                                <br>
+                                                {{ form_question.body }}
+                                                {{ form_question.parent }}
+                                                <button class="btn btn-default">ارسال</button>
                                             </form>
                                         </article>
                                     </div>

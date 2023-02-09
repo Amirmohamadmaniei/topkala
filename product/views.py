@@ -1,5 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
+
+from comment.forms import CommentForm, QuestionForm
+from comment.models import Comment, Question
 from profiles.models import Favorite
 from .mixins import SortMixin
 from .models import Product, Category, SubCategory, Subset
@@ -10,8 +13,15 @@ from django.core.paginator import Paginator
 class ProductDetailView(View):
     def get(self, request, pk, slug):
         form = AddCartForm()
-        product = Product.objects.get(pk=pk, slug=slug)
+        form_comment = CommentForm()
+        form_question = QuestionForm()
+
+        product = get_object_or_404(Product, id=pk, slug=slug)
         properties = product.properties.all()
+
+        comments = Comment.objects.filter(product=product)
+        questions = Question.objects.filter(product=product, has_parent=False)
+
         if request.user.is_authenticated:
             is_favorite = Favorite.objects.filter(user=request.user, product=product).exists()
         else:
@@ -19,9 +29,11 @@ class ProductDetailView(View):
 
         if not request.user.ip_address in product.view.all():
             product.view.add(request.user.ip_address)
+
         return render(request, 'product/product_detail.html',
-                      {'object': product, 'form': form, 'is_favorite': is_favorite,
-                       'primary_property': properties, 'secondary_property': properties[0:5]})
+                      {'object': product, 'form': form, 'is_favorite': is_favorite, 'comments': comments,
+                       'questions': questions, 'primary_property': properties, 'secondary_property': properties[0:5],
+                       'form_comment': form_comment, 'form_question': form_question})
 
 
 class ProductListCategoryView(SortMixin, View):

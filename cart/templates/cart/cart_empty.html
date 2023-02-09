@@ -5,6 +5,15 @@
 <!-- main -->
 <main class="cart default">
     <div class="container text-center">
+        {% if messages %}
+        <ul class="messages">
+            {% for msg in messages %}
+            <li class="{{ msg.tags }}">{{ msg }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+
         <div class="cart-empty">
             <div class="cart-empty-icon">
                 <i class="now-ui-icons shopping_basket"></i>

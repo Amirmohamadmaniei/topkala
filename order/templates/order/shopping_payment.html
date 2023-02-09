@@ -227,7 +227,7 @@
                     <div class="checkout-summary-price-value">
                         <span class="checkout-summary-price-value-amount">{{ order.get_total_price_with_post|separator }}</span>تومان
                     </div>
-                    <a href="#" class="selenium-next-step-shipping">
+                    <a href="{% url 'payment:request' order.id %}" class="selenium-next-step-shipping">
                         <div class="parent-btn">
                             <button class="dk-btn dk-btn-info">
                                 ادامه ثبت سفارش
