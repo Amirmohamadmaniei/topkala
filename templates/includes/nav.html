@@ -7,7 +7,7 @@
 <nav class="navbar direction-ltr fixed-top header-responsive">
     <div class="container">
         <div class="navbar-translate">
-            <a class="navbar-brand" href="#pablo">
+            <a class="navbar-brand" href="{% url 'home:home' %}">
                 <img src="{% static 'img/logo.png' %}" height="24px" alt="">
             </a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
@@ -18,8 +18,8 @@
                 <span class="navbar-toggler-bar bar3"></span>
             </button>
             <div class="search-nav default">
-                <form action="">
-                    <input type="text" placeholder="جستجو ...">
+                <form action="" method="get">
+                    {{ form_search.search }}
                     <button type="submit"><img src="{% static 'img/search.png' %}" alt=""></button>
                 </form>
                 <ul>
@@ -28,14 +28,14 @@
                     {% else %}
                     <li><a href="{% url 'profile:profile' %}"><i class="now-ui-icons users_single-02"></i></a></li>
                     {% endif %}
-                    <li><a href="#"><i class="now-ui-icons shopping_basket"></i></a></li>
+                    <li><a href="{% url 'cart:cart' %}"><i class="now-ui-icons shopping_basket"></i></a></li>
                 </ul>
             </div>
         </div>
 
         <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <div class="logo-nav-res default text-center">
-                <a href="#">
+                <a href="{% url 'home:home' %}">
                     <img src="{% static 'img/logo.png' %}" height="36px" alt="">
                 </a>
             </div>
@@ -46,13 +46,13 @@
                     <ul>
                         {% for sub_category in category.sub_categories.all %}
                         <li class="sub-menu">
-                            <a href="{% url 'product:list_sub_category' sub_category.category.slug sub_category.slug %}">{{
-                                sub_category.title }}</a>
+                            <a href="{% url 'product:list_sub_category' sub_category.category.slug sub_category.slug %}">
+                                {{ sub_category.title }}</a>
                             <ul>
                                 {% for subset in sub_category.subsets.all %}
                                 <li>
-                                    <a href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">{{
-                                        subset.title }}</a>
+                                    <a href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">
+                                        {{ subset.title }}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -82,8 +82,8 @@
                 </div>
                 <div class="col-lg-6 col-md-5 col-sm-8 col-7">
                     <div class="search-area default">
-                        <form action="" class="search">
-                            <input type="text" placeholder="نام کالا، برند و یا دسته مورد نظر خود را جستجو کنید…">
+                        <form action="{% url 'home:search' %}" method="get" class="search">
+                            {{ form_search.search }}
                             <button type="submit"><img src="{% static 'img/search.png' %}" alt=""></button>
                         </form>
                     </div>
@@ -91,7 +91,7 @@
                 <div class="col-md-4 col-sm-12">
                     {% if not request.user.is_authenticated %}
                     <div class="user-login dropdown">
-                        <a href="#" class="btn btn-neutral dropdown-toggle" data-toggle="dropdown"
+                        <a href="" class="btn btn-neutral dropdown-toggle" data-toggle="dropdown"
                            id="navbarDropdownMenuLink1">
                             ورود / ثبت نام
                         </a>
@@ -156,11 +156,11 @@
                                 {% endfor %}
                             </ul>
                             {% if cart.get_count_item %}
-                                {% if not request.user.is_authenticated %}
-                                <a href="{% url 'account:login' %}" class="basket-submit">ورود و ثبت سفارش</a>
-                                {% else %}
-                                <a href="#" class="basket-submit">ثبت سفارش</a>
-                                {% endif %}
+                            {% if not request.user.is_authenticated %}
+                            <a href="{% url 'account:login' %}" class="basket-submit">ورود و ثبت سفارش</a>
+                            {% else %}
+                            <a href="#" class="basket-submit">ثبت سفارش</a>
+                            {% endif %}
                             {% endif %}
                         </ul>
                     </div>
@@ -172,7 +172,8 @@
                 <ul class="list float-right">
                     {% for category in categories %}
                     <li class="list-item list-item-has-children mega-menu mega-menu-col-5">
-                        <a class="nav-link" href="{% url 'product:list_category' category.slug %}">{{ category.title }}</a>
+                        <a class="nav-link" href="{% url 'product:list_category' category.slug %}">
+                            {{ category.title }}</a>
                         <ul class="sub-menu nav">
                             {% for sub_category in category.sub_categories.all %}
                             <li class="list-item list-item-has-children">
@@ -184,7 +185,8 @@
                                     {% for subset in sub_category.subsets.all %}
                                     <li class="list-item">
                                         <a class="nav-link"
-                                           href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">{{ subset.title }}</a>
+                                           href="{% url 'product:list_subset' subset.category.category.slug subset.category.slug subset.slug %}">
+                                            {{ subset.title }}</a>
                                     </li>
                                     {% endfor %}
                                 </ul>

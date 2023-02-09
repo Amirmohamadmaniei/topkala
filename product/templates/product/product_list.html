@@ -13,8 +13,10 @@
                     <div class="box-header">جستجو در نتایج:</div>
                     <div class="box-content">
                         <div class="ui-input ui-input--quick-search">
-                            <input type="text" class="ui-input-field ui-input-field--cleanable"
+                            <form action="{% url 'home:search' %}">
+                            <input type="text" name="search" class="ui-input-field ui-input-field--cleanable"
                                    placeholder="نام محصول یا برند مورد نظر را بنویسید…">
+                             </form>
                             <span class="ui-input-cleaner"></span>
                         </div>
                     </div>
@@ -151,14 +153,14 @@
                                                         <div class="price-value">
 
                                                             {% if object.is_available %}
-                                                                {% if object.discount %}
+
                                                                         <div class="price-value-wrapper">
                                                                             <small>
                                                                                 <del> {{ object.price|separator }} <span
                                                                                         class="price-currency">تومان</span></del>
                                                                             </small>
                                                                         </div>
-                                                                {% else %}
+                                                                {% if object.discount %}
                                                                         <div class="price-value-wrapper text-danger">
                                                                             {{ object.get_price_with_discount|separator }} <span
                                                                                 class="price-currency">تومان</span>

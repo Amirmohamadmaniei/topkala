@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 
+from home.forms import SearchForm
 from product.mixins import SortMixin
 from product.models import Product
 
@@ -25,3 +26,14 @@ class AmazingView(SortMixin, View):
 
         count_object = object_list.count()
         return render(request, 'home/amazing.html', {'object_list': object_list, 'count_object': count_object})
+
+
+class SearchListView(SortMixin, View):
+    def get(self, request):
+        form = SearchForm(request.GET)
+
+        if form.is_valid():
+            search = form.cleaned_data['search']
+            object_list = Product.objects.filter(title__icontains=search)
+
+        return render(request, 'product/product_list.html', {'object_list': object_list})
