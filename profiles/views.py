@@ -18,12 +18,16 @@ class ProfileView(LoginRequiredMixin, View):
         return render(request, 'profiles/profile.html', {'product_favorites': product_favorites, 'orders': orders})
 
 
-class ProfilePersonalView(View):
+class ProfilePersonalView(LoginRequiredMixin, View):
+    login_url = 'account:login'
+
     def get(self, request):
         return render(request, 'profiles/profile_personal.html')
 
 
-class ProfileEditView(View):
+class ProfileEditView(LoginRequiredMixin, View):
+    login_url = 'account:login'
+
     form_class = EditProfileForm
     template_name = 'profiles/profile_edit.html'
 

@@ -12,4 +12,7 @@ urlpatterns = [
     path('send-otp/', views.SendOTP.as_view(), name='send_otp'),
     path('welcome/', views.WelcomeView.as_view(), name='welcome'),
     path('change-password/', views.ChangePassword.as_view(), name='change_password'),
+    path('forget-password/', views.ForgetPasswordView.as_view(), name='forget_password'),
+    path('verify-phone/', views.VerifyPhoneView.as_view(), name='verify_phone'),
+    path('set-password/', views.SetNewPasswordView.as_view(), name='set_password'),
 ]

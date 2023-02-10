@@ -10,61 +10,47 @@
                     <a href="#" class="logo">
                         <img src="{% static 'img/logo.png' %}" alt="">
                     </a>
-                    <div class="account-box-title text-center">ورود به تاپ کالا</div>
-
-                    <div class="text-center">
-                        <ul>
-                            <li class="text-danger">{{ form.non_field_errors }}</li>
-                        </ul>
-                    </div>
+                    <div class="account-box-title text-center">تایید  حساب</div>
 
                     <div class="account-box-content">
                         <form class="form-account" method="post">
                             {% csrf_token %}
-                            <div class="form-account-title">ایمیل یا شماره موبایل</div>
+                            <div class="form-account-title">کد تایید</div>
                             <div class="form-account-row">
                                 <label class="input-label">
                                     <i class="now-ui-icons users_single-02"></i>
                                 </label>
 
-                                {{ form.username }}
+                                {{ form.code }}
+
+                                <div class="text-danger">
+                                    <ul>
+                                        <li>{{ form.code.errors }}</li>
+                                    </ul>
+                                </div>
 
                             </div>
-                            <div class="form-account-title">رمز عبور
-                                <a href="{% url 'account:forget_password' %}" class="btn-link-border form-account-link">
-                                    رمز عبور خود را فراموش کرده ام
-                                </a>
-                            </div>
-                            <div class="form-account-row">
-                                <label class="input-label"><i
-                                        class="now-ui-icons ui-1_lock-circle-open"></i>
-                                </label>
 
-                                {{ form.password }}
-
-                            </div>
                             <div class="form-account-row form-account-submit">
                                 <div class="parent-btn">
                                     <button class="dk-btn dk-btn-info">
-                                        ورود به تاپ کالا
+                                        تایید
                                         <i class="fa fa-sign-in"></i>
                                     </button>
                                 </div>
                             </div>
-                            <div class="form-account-agree">
-                                <label class="checkbox-form checkbox-primary">
-                                    <input type="checkbox" checked="checked" id="agree">
-                                    <span class="checkbox-check"></span>
-                                </label>
-                                <label for="agree">مرا به خاطر داشته باش</label>
+
+
+                            <div class="account-box-footer">
+                                <span>کد را دریافت نکردید ؟</span>
+                                <a href="{% url 'account:send_otp' %}" class="btn-link-border">ارسال ذوباره کد</a>
                             </div>
+
+
                         </form>
                     </div>
                     <div class="account-box-footer">
-                        <span>کاربر جدید هستید؟</span>
-                        <a href="{% url 'account:register' %}" class="btn-link-border">
-                            ثبت‌نام در تاپ کالا
-                        </a>
+                        <span></span>
                     </div>
                 </div>
             </div>
