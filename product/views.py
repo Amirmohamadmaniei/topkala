@@ -26,6 +26,7 @@ class ProductDetailView(View):
         else:
             is_favorite = False
 
+
         if not request.user.ip_address in product.view.all():
             product.view.add(request.user.ip_address)
 

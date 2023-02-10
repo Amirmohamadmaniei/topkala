@@ -14,7 +14,8 @@ class ProfileView(LoginRequiredMixin, View):
 
     def get(self, request):
         product_favorites = Favorite.objects.filter(user=request.user)[0:2]
-        return render(request, 'profiles/profile.html', {'product_favorites': product_favorites})
+        orders = Order.objects.filter(user=request.user, is_paid=True)[0:3]
+        return render(request, 'profiles/profile.html', {'product_favorites': product_favorites, 'orders': orders})
 
 
 class ProfilePersonalView(View):

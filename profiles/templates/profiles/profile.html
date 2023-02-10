@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load jalali_tags %}
-
+{% load separator %}
 {% block content %}
 
 <!-- main -->
@@ -95,10 +95,26 @@
                                                 </h4>
                                             </a>
                                             {% if item.product.is_available %}
-                                                <div class="profile-recent-fav-price">{{ item.product.get_price_with_discount }}</div>
+                                            {% if item.product.discount %}
+                                                <div class="text text-muted">
+                                                    <del>{{ item.product.price|separator }} تومان</del>
+                                                </div>
+                                                <div>
+                                                    <span>{{ item.product.discount }} %</span>
+                                                </div>
+                                                <div class="profile-recent-fav-price">
+                                                   {{ item.product.get_price_with_discount|separator }} تومان
+                                                </div>
                                             {% else %}
-                                                <div class="profile-recent-fav-price">ناموجود</div>
+                                                 <div class="profile-recent-fav-price">
+                                                   {{ item.product.get_price_with_discount|separator }} تومان
+                                                </div>
                                             {% endif %}
+                                        {% else %}
+                                            <div class="price-value-wrapper text-danger">
+                                                <span class="price-currency">ناموجود</span>
+                                            </div>
+                                        {% endif %}
                                         </div>
                                     </div>
                                     {% endfor %}
@@ -115,17 +131,68 @@
                     </div>
                 </div>
                 <div class="row">
+
+
                     <div class="col-12">
                         <h1 class="title-tab-content">آخرین سفارش ها</h1>
                     </div>
-                    <div class="col-12 text-center">
-                        <div class="content-section pt-5 pb-5">
-                            <div class="icon-empty">
-                                <i class="now-ui-icons travel_info"></i>
+
+                    {% for order in orders %}
+                        {% for item in order.items.all %}
+
+                            <div class="col-md-6 col-sm-12">
+                                <div class="profile-recent-fav-row">
+                                    <a href="{{ item.product.get_absolute_url }}" class="profile-recent-fav-col profile-recent-fav-col-thumb">
+                                        <img src="{{ item.product.images.first.image.url }}">
+                                    </a>
+                                    <div class="profile-recent-fav-col profile-recent-fav-col-title">
+                                        <a href="{{ item.product.get_absolute_url }}">
+                                            <h4 class="profile-recent-fav-name">
+                                               {{ item.product.title }}
+                                            </h4>
+                                        </a>
+                                        {% if item.product.is_available %}
+                                            {% if item.product.discount %}
+                                                <div class="text text-muted">
+                                                    <del>{{ item.product.price|separator }} تومان</del>
+                                                </div>
+                                                <div>
+                                                    <span>{{ item.product.discount }} %</span>
+                                                </div>
+                                                <div class="profile-recent-fav-price">
+                                                   {{ item.product.get_price_with_discount|separator }} تومان
+                                                </div>
+                                            {% else %}
+                                                 <div class="profile-recent-fav-price">
+                                                   {{ item.product.get_price_with_discount|separator }} تومان
+                                                </div>
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="price-value-wrapper text-danger">
+                                                <span class="price-currency">ناموجود</span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-12 text-left mb-3">
+                                        <a href="{{ item.product.get_absolute_url }}" class="view-product">مشاهده محصول</a>
+                                    </div>
+                                </div>
                             </div>
-                            <h1 class="text-empty">موردی برای نمایش وجود ندارد!</h1>
-                        </div>
-                    </div>
+
+                        {% endfor %}
+                    {% empty %}
+                            <div class="col-12 text-center">
+                                <div class="content-section pt-5 pb-5">
+                                    <div class="icon-empty">
+                                        <i class="now-ui-icons travel_info"></i>
+                                    </div>
+                                    <h1 class="text-empty">موردی برای نمایش وجود ندارد!</h1>
+                                </div>
+                            </div>
+                    {% endfor %}
+
+
+
                 </div>
             </div>
 

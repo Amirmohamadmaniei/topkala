@@ -18,7 +18,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
             </button>
             <div class="search-nav default">
-                <form action="" method="get">
+                <form action="{% url 'home:search' %}" method="get">
                     {{ form_search.search }}
                     <button type="submit"><img src="{% static 'img/search.png' %}" alt=""></button>
                 </form>

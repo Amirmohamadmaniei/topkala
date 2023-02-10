@@ -102,22 +102,22 @@
 
 
                             <li>
-                                <a href="?sort=title" aria-expanded="false">حروف الفبا</a>
+                                <a href="?sort=title{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-expanded="false">حروف الفبا</a>
                             </li>
                             <li>
-                                <a href="?sort=view" aria-expanded="false">پربازدیدترین</a>
+                                <a href="?sort=view{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-expanded="false">پربازدیدترین</a>
                             </li>
                             <li>
-                                <a href="?sort=-created" aria-expanded="true">جدیدترین</a>
+                                <a href="?sort=-created{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-expanded="true">جدیدترین</a>
                             </li>
                             <li>
-                                <a href="?sort=-sold" aria-expanded="false">پرفروش‌ترین‌</a>
+                                <a href="?sort=-sold{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-expanded="false">پرفروش‌ترین‌</a>
                             </li>
                             <li>
-                                <a href="?sort=price" aria-expanded="false">ارزان‌ترین</a>
+                                <a href="?sort=price{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" aria-expanded="false">ارزان‌ترین</a>
                             </li>
                             <li>
-                                <a href="?sort=-price" role="tab"
+                                <a href="?sort=-price{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" role="tab"
                                    aria-expanded="false">گران‌ترین</a>
                             </li>
 

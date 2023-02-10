@@ -66,57 +66,31 @@
                         <div id="progressBar">
                             <div class="slide-progress"></div>
                         </div>
+
                         <div id="suggestion-slider" class="owl-carousel owl-theme">
+
+                            {% for product in random_products %}
                             <div class="item">
-                                <a href="#">
-                                    <img src="{% static 'img/product/692674-200x200.jpg' %}" class="w-100" alt="">
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img src="{{ product.images.first.image.url }}" class="w-100" alt="">
                                 </a>
                                 <h3 class="product-title">
-                                    <a href="#"> لپ تاپ ۱۵ اینچی ایسوس مدل FX503VD - A </a>
+                                    <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
                                 </h3>
                                 <div class="price">
-                                    <span class="amount">5,700,000<span>تومان</span></span>
+                                    {% if product.discount %}
+                                        <del><span class="amount">{{ product.price|separator }}<span>تومان</span></span></del>
+                                        <span class="amount">{{ product.get_price_with_discount }}<span>تومان</span></span>
+                                    {% endif %}
                                 </div>
                             </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="{% static 'img/product/e75a73-200x200.jpg' %}" class="w-100" alt="">
-                                </a>
-                                <h3 class="product-title">
-                                    <a href="#"> لپ تاپ ۱۳ اینچی اپل مدل MacBook Pro MLH12 همراه با تاچ بار
-                                    </a>
-                                </h3>
-                                <div class="price">
-                                    <del><span class="amount">10,300,000<span>تومان</span></span></del>
-                                    <span class="amount">1,099,000<span>تومان</span></span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="{% static 'img/product/482250-200x200.jpg' %}" class="w-100" alt="">
-                                </a>
-                                <h3 class="product-title">
-                                    <a href="#"> لپ تاپ ۱۵ اینچی اپل مدل ۲۰۱۷ MacBook Pro MPTT2 همراه با
-                                        تاچ
-                                        بار </a>
-                                </h3>
-                                <div class="price">
-                                    <del><span class="amount">16,800,000<span>تومان</span></span></del>
-                                    <span class="amount">16,286,000<span>تومان</span></span>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <a href="#">
-                                    <img src="{% static 'img/product/19a2cc-200x200.jpg' %}" class="w-100" alt="">
-                                </a>
-                                <h3 class="product-title">
-                                    <a href="#"> لپ تاپ ۱۳ اینچی اپل مدل MacBook Air MQD32 2017 </a>
-                                </h3>
-                                <div class="price">
-                                    <del><span class="amount">6,000,000<span>تومان</span></span></del>
-                                    <span class="amount">5,746,000<span>تومان</span></span>
-                                </div>
-                            </div>
+                            {% endfor %}
+
+
+
+
+
+
                         </div>
                     </div>
                     <div class="widget-banner widget card">
@@ -207,7 +181,7 @@
                             {% endfor %}
 
                             <li class="view-all">
-                                <a href="#" class="btn btn-primary btn-block hvr-sweep-to-left">
+                                <a href="{% url 'home:amazing' %}" class="btn btn-primary btn-block hvr-sweep-to-left">
                                     <i class="fa fa-arrow-left"></i>مشاهده همه شگفت انگیزها
                                 </a>
                             </li>
