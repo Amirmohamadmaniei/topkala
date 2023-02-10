@@ -1,5 +1,4 @@
 from django import forms
-
 from comment.models import Comment, Question
 
 
@@ -22,4 +21,3 @@ class QuestionForm(forms.ModelForm):
             'body': forms.Textarea(attrs={'class': 'form-control', 'rows': '5', 'placeholder': 'نظر خود را وارد کنید'}),
             'parent': forms.HiddenInput(attrs={'id': 'parent'}),
         }
-

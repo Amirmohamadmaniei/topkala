@@ -4,18 +4,17 @@ from .managers import UserManager
 
 
 class User(AbstractBaseUser):
-    phone = models.CharField(max_length=11, unique=True)
-    email = models.EmailField(unique=True, null=True, blank=True)
+    phone = models.CharField(max_length=11, unique=True, verbose_name='موبایل')
+    email = models.EmailField(unique=True, null=True, blank=True, verbose_name='ایمیل')
 
-    card_number = models.CharField(max_length=16, null=True, blank=True)
+    card_number = models.CharField(max_length=16, null=True, blank=True, verbose_name='شماره کارت بانکی')
 
-    f_name = models.CharField(max_length=65, null=True, blank=True)
-    l_name = models.CharField(max_length=65, null=True, blank=True)
-    birth_day = models.DateField(null=True, blank=True)
-    image = models.ImageField(upload_to='user/profile/', default='user.svg')
+    f_name = models.CharField(max_length=65, null=True, blank=True, verbose_name='نام')
+    l_name = models.CharField(max_length=65, null=True, blank=True, verbose_name='نام خانوادگی')
+    birth_day = models.DateField(null=True, blank=True, verbose_name='تاریخ تولد')
 
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True, verbose_name='فعال')
+    is_admin = models.BooleanField(default=False, verbose_name='ادمین')
 
     created = models.DateTimeField(auto_now_add=True)
 
@@ -23,6 +22,10 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = []
 
     objects = UserManager()
+
+    class Meta:
+        verbose_name = 'کاربر'
+        verbose_name_plural = 'کاربران'
 
     def has_perm(self, perm, obj=None):
         return True
@@ -46,10 +49,14 @@ class User(AbstractBaseUser):
 
 
 class OTP(models.Model):
-    code = models.CharField(max_length=4)
-    phone = models.CharField(max_length=11)
+    code = models.CharField(max_length=4, verbose_name='کد')
+    phone = models.CharField(max_length=11, verbose_name='موبایل')
 
     created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'OTP'
+        verbose_name_plural = 'OTPs'
 
     def __str__(self):
         return f'{self.code} - {self.phone}'

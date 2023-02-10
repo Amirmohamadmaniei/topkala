@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, OTP
+from .models import User
 from django.core.exceptions import ValidationError
 
 

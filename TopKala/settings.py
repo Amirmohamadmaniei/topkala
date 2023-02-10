@@ -157,11 +157,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.User'
 
-MERCHANT = ''
-ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
-ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
-ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
-CallbackURL = 'http://localhost:8000/payment/verify/'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

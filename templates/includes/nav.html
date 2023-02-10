@@ -156,11 +156,11 @@
                                 {% endfor %}
                             </ul>
                             {% if cart.get_count_item %}
-                            {% if not request.user.is_authenticated %}
-                            <a href="{% url 'account:login' %}" class="basket-submit">ورود و ثبت سفارش</a>
-                            {% else %}
-                            <a href="#" class="basket-submit">ثبت سفارش</a>
-                            {% endif %}
+                                {% if not request.user.is_authenticated %}
+                                    <a href="{% url 'account:login' %}" class="basket-submit">ورود و ثبت سفارش</a>
+                                {% else %}
+                                    <a href="#" class="basket-submit">ثبت سفارش</a>
+                                {% endif %}
                             {% endif %}
                         </ul>
                     </div>

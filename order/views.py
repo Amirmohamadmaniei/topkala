@@ -16,8 +16,6 @@ class OrderCreateView(LoginRequiredMixin, View):
     template_name = 'order/checkout.html'
 
     def get(self, request):
-        if request.user.orders.all():
-            request.user.orders.all().delete()
         return render(request, self.template_name, {'form': self.form_class})
 
     def post(self, request):

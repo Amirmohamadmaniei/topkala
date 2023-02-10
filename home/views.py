@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.views import View
-
 from home.forms import SearchForm
 from product.mixins import SortMixin
 from product.models import Product

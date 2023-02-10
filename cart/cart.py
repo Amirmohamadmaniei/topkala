@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404
-
 from home.models import Post
 from product.models import Product
 

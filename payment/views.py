@@ -1,14 +1,21 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404, render
-import requests
-import json
-from TopKala.settings import MERCHANT, CallbackURL, ZP_API_REQUEST, ZP_API_STARTPAY, ZP_API_VERIFY
 from django.views import View
 from django.contrib import messages
 from order.models import Order
+import requests
+import json
+
+MERCHANT = '3206f8e4-7a4b-4725-bdce-1ea8cad6ae37'
+ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
+ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
+ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
+CallbackURL = 'http://127.0.0.1:8000/payment/verify/'
 
 
-class SendRequestView(View):
+class SendRequestView(LoginRequiredMixin, View):
+    login_url = 'account:login'
 
     def get(self, request, order_id):
 
@@ -20,13 +27,14 @@ class SendRequestView(View):
 
         req_data = {
             "merchant_id": MERCHANT,
-            "amount": int(order.get_total_price),
+            "amount": int(str(order.get_total_price) + '0'),
             "callback_url": CallbackURL,
             "description": description,
-            "metadata": {"mobile": int(phone), "email": email}
+            "metadata": {"mobile": str(phone), "email": email}
         }
         req_header = {"accept": "application/json", "content-type": "application/json'"}
         req = requests.post(url=ZP_API_REQUEST, data=json.dumps(req_data), headers=req_header)
+        print(req.json()['data']['authority'])
         authority = req.json()['data']['authority']
         if len(req.json()['errors']) == 0:
             return redirect(ZP_API_STARTPAY.format(authority=authority))
@@ -36,7 +44,8 @@ class SendRequestView(View):
             return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
 
 
-class VerifyView(View):
+class VerifyView(LoginRequiredMixin, View):
+    login_url = 'account:login'
 
     def get(self, request):
         order_id = request.session.get('order_id')
@@ -50,7 +59,7 @@ class VerifyView(View):
                           "content-type": "application/json'"}
             req_data = {
                 "merchant_id": MERCHANT,
-                "amount": int(order.get_total_price),
+                "amount": int(str(order.get_total_price) + '0'),
                 "authority": t_authority
             }
             req = requests.post(url=ZP_API_VERIFY, data=json.dumps(req_data), headers=req_header)
@@ -59,10 +68,11 @@ class VerifyView(View):
                 if t_status == 100:
 
                     order.is_paid = True
+                    order.save()
                     ref_id = str(req.json()['data']['ref_id'])
 
-                    for product in order.products.all():
-                        product.sold += 1
+                    for item in order.items.all():
+                        item.product.sold += 1
 
                     messages.success(request, 'خرید با موفقیت انجام شد', extra_tags='alert alert-success')
                     return render(request, 'payment/shopping_complete.html', {'ref_id': ref_id, 'order': order,

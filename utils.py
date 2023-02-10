@@ -1,12 +1,6 @@
 import random
 from account.models import OTP
-from account import melipayamak
-
-# def create_send_otp(phone):
-#     OTP.objects.filter(phone=phone).delete()
-#     code = random.randint(1000, 9999)
-#     OTP.objects.create(code=code, phone=phone)
-#     print(code)
+import requests
 
 
 def create_send_otp(phone):
@@ -14,11 +8,5 @@ def create_send_otp(phone):
     code = random.randint(1000, 9999)
     OTP.objects.create(code=code, phone=phone)
 
-    username = '09018496657'
-    password = 'RPN9G'
-    api = melipayamak.Api(username, password)
-    sms = api.sms('soap')
-    to = phone
-    _from = '50004001496657'
-    text = f' تاپ کالا \n کد تایید : {code}'
-    response = sms.send(to, _from, text)
+    data = {'from': '50004001496657', 'to': phone, 'text': f' تاپ کالا \n کد تایید : {code}'}
+    requests.post('https://console.melipayamak.com/api/send/simple/1fa73755229242dfa65bb56f70960f2d', json=data)
