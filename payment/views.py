@@ -7,7 +7,7 @@ from order.models import Order
 import requests
 import json
 
-MERCHANT = '3206f8e4-7a4b-4725-bdce-1ea8cad6ae37'
+MERCHANT = ''
 ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
 ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
