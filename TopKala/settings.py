@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # third party apps
     'jalali_date',
+    'storages',
 
     # my apps
     'home.apps.HomeConfig',
@@ -157,8 +158,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'account.User'
 
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.backends.EmailAuthenticate',
 ]
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_S3_ENDPOINT_URL = 'https://storage.iran.liara.space'
+AWS_STORAGE_BUCKET_NAME = 'topkala'
+AWS_ACCESS_KEY_ID = '514fi35ismmsnp1u'
+AWS_SECRET_ACCESS_KEY = '9943f447-d835-404a-9e50-0f00bc2814e5'
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
